@@ -1,0 +1,22 @@
+@import './styles/variables';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+
+  // [NOTE] Remove after finalizing project
+  // border: 1px solid red;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: $text;
+  background-color: $background;
+}

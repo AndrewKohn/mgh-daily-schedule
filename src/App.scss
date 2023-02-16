@@ -1,0 +1,13 @@
+@use './styles/mixins';
+
+.container {
+  @include mixins.DisplayFlex(center, center, row, nowrap);
+  height: 100%;
+  width: 100%;
+
+  .main {
+    @include mixins.DisplayFlex(flex-start, center, column, nowrap);
+    height: 100%;
+    width: 65%;
+  }
+}

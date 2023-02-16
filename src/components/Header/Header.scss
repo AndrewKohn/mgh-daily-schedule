@@ -1,0 +1,78 @@
+@use '../../styles/mixins';
+@import '../../styles/variables';
+
+header {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  gap: 2rem;
+  padding: 10rem 0 3.2rem 0;
+  width: 100%;
+
+  .primary-heading-container {
+    @include mixins.DisplayFlex(center, center, column, nowrap);
+    gap: 2rem;
+    h1 {
+      color: $header;
+      font-size: 4rem;
+      letter-spacing: 2px;
+    }
+
+    p {
+      font-size: 2rem;
+    }
+  }
+
+  .house-button-wrapper {
+    @include mixins.DisplayFlex(center, center, row, nowrap);
+    gap: 2rem;
+    margin-top: 3.2rem;
+
+    button {
+      background: $button;
+      border: none;
+      border-radius: 5px;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+
+      span {
+        font-size: 2rem;
+        letter-spacing: 1.6px;
+      }
+
+      &:nth-child(2) {
+        position: relative;
+        height: 3.2rem;
+        width: 3.2rem;
+        border-radius: 50%;
+      }
+
+      .icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 2.4rem;
+        width: 2.4rem;
+      }
+    }
+  }
+
+  .shift-button-wrapper {
+    @include mixins.DisplayFlex(center, center, row, nowrap);
+
+    button {
+      background: $button;
+      border: none;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+
+      &:first-child {
+        border-right: 1px solid $background;
+        border-radius: 5px 0 0 5px;
+      }
+      &:last-child {
+        border-right: 1px solid $background;
+        border-radius: 0 5px 5px 0;
+      }
+    }
+  }
+}
