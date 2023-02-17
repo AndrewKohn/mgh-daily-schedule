@@ -4,23 +4,19 @@ interface Props {}
 
 const ScheduleListItem = ({}) => {
   return (
-    <li>
-      <span>
-        <p>10:45</p>
-      </span>
-      <span>
-        <p>Doe, J</p>
-      </span>
-      <span>
+    <li className="schedule-list-item">
+      <span className="schedule-list-item-information">
+        <p>10AM</p>
+        <p>Doe, Jane</p>
         <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe maxime
-          sequi porro accusamus rem nulla, voluptatibus possimus, earum, est
-          dicta fugit sit quia et. Dolor laborum explicabo iure excepturi
-          sapiente.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem quam
+          atque eaque laborum delectus nihil illum sed similique eos,
+          reprehenderit hic ullam minus labore libero possimus? Accusantium
+          rerum similique nisi!
         </p>
-      </span>
-      <span>
-        <input className="checkbox" type="checkbox" />
+        <span>
+          <input className="checkbox" type="checkbox" />
+        </span>
       </span>
     </li>
   );

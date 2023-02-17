@@ -5,51 +5,15 @@ interface Props {}
 
 const ScheduleList = ({}) => {
   return (
-    <div className="table-container">
-      <ul>
-        <div className="list-headings">
-          <span>Time</span>
-          <span>Resident</span>
-          <span>Activity</span>
-          <span>Status</span>
-        </div>
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-        <ScheduleListItem />
-      </ul>
-    </div>
+    <ul className="schedule-list">
+      <span className="list-headings">
+        <p>Time</p>
+        <p>Patient</p>
+        <p>Activity</p>
+        <p>Complete</p>
+      </span>
+      <ScheduleListItem />
+    </ul>
   );
 };
 
