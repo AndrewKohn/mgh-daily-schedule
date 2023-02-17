@@ -1,2 +1,31 @@
 @use '../../styles/mixins';
 @import '../../styles/variables';
+
+.schedule-list-item {
+  width: 100%;
+  .schedule-list-item-information {
+    @include mixins.DisplayFlex(center, center, row, nowrap);
+
+    p {
+      &:first-child {
+        width: 5%;
+        text-align: center;
+      }
+      &:nth-child(2) {
+        width: 7%;
+        text-align: center;
+      }
+      &:nth-child(3) {
+        width: 83%;
+      }
+    }
+
+    span {
+      @include mixins.DisplayFlex(center, center, row, nowrap);
+      width: 5%;
+    }
+    .checkbox {
+      accent-color: $button;
+    }
+  }
+}

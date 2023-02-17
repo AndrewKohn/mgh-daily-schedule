@@ -1,2 +1,35 @@
 @use '../../styles/mixins';
 @import '../../styles/variables';
+
+.schedule-list {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  width: 100%;
+  list-style: none;
+  background-color: $border;
+
+  .list-headings {
+    @include mixins.DisplayFlex(center, center, row, nowrap);
+    width: 100%;
+
+    p {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid brown;
+      text-align: center;
+      line-height: 1.6;
+
+      &:first-child {
+        width: 5%;
+      }
+      &:nth-child(2) {
+        width: 7%;
+      }
+      &:nth-child(3) {
+        width: 83%;
+      }
+      &:last-child {
+        width: 5%;
+      }
+    }
+  }
+}
