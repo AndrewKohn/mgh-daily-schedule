@@ -26,22 +26,27 @@ header {
     gap: 2rem;
     margin-top: 3.2rem;
 
-    button {
-      background: $button;
-      border: none;
+    .house-button {
+      background-color: transparent;
+      color: $header;
+      filter: opacity(0.25);
+      border: 2px solid $button;
       border-radius: 5px;
       padding: 0.4rem 0.8rem;
       cursor: pointer;
+      animation: fade-out 0.25s ease-in;
 
       span {
         font-size: 2rem;
-        letter-spacing: 1.6px;
       }
 
       &:nth-child(2) {
         position: relative;
         height: 3.2rem;
         width: 3.2rem;
+        filter: opacity(1);
+        background-color: $button;
+        color: $border;
         border-radius: 50%;
       }
 
@@ -49,30 +54,79 @@ header {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%) scale(1);
         height: 2.4rem;
         width: 2.4rem;
+        transition: transform 0.1s;
       }
+
+      .left-icon {
+        transform: translate(-50%, -50%) scale(-1);
+        transition: transform 0.1s;
+      }
+    }
+
+    .selected-house {
+      filter: opacity(1);
+      background-color: $button;
+      color: $border;
+      animation: fade-in 0.25s ease-in;
     }
   }
 
   .shift-button-wrapper {
     @include mixins.DisplayFlex(center, center, row, nowrap);
 
-    button {
-      background: $button;
-      border: none;
+    .shift-button {
+      background-color: transparent;
+      color: $header;
+      filter: opacity(0.25);
+      border: 2px solid $button;
       padding: 0.4rem 0.8rem;
       cursor: pointer;
+      animation: fade-out 0.25s ease-in;
 
       &:first-child {
-        border-right: 1px solid $background;
+        border-right: none;
         border-radius: 5px 0 0 5px;
       }
       &:last-child {
-        border-right: 1px solid $background;
+        border-left: none;
         border-radius: 0 5px 5px 0;
       }
+    }
+
+    .selected-shift {
+      filter: opacity(1);
+      background-color: $button;
+      color: $border;
+      animation: fade-in 0.25s ease-in;
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      filter: opacity(0.25);
+      background-color: transparent;
+      color: $header;
+    }
+    100% {
+      filter: opacity(1);
+      color: $border;
+      background-color: $button;
+    }
+  }
+
+  @keyframes fade-out {
+    0% {
+      filter: opacity(1);
+      color: $border;
+      background-color: $button;
+    }
+    100% {
+      filter: opacity(0.25);
+      background-color: transparent;
+      color: $header;
     }
   }
 }
