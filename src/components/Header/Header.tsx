@@ -39,8 +39,23 @@ const Header = ({}) => {
   };
 
   useEffect(() => {
-    console.log('House:', isClearviewHouse);
-    console.log('day:', isDayShift);
+    // Adjust favicon by shift
+    isDayShift
+      ? document
+          .getElementById('favicon')
+          ?.setAttribute('href', './src/icons/sun.png')
+      : document
+          .getElementById('favicon')
+          ?.setAttribute('href', './src/icons/moon.png');
+
+    // Adjust page title by house
+    isClearviewHouse
+      ? isDayShift
+        ? (document.title = 'Clearview Day Schedule')
+        : (document.title = 'Clearview Night Schedule')
+      : isDayShift
+      ? (document.title = 'Williston Day Schedule')
+      : (document.title = 'Williston Night Schedule');
   }, [isClearviewHouse, isDayShift]);
 
   return (
