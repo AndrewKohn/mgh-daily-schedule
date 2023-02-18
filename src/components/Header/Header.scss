@@ -71,6 +71,7 @@ header {
       background-color: $button;
       color: $border;
       animation: fade-in 0.25s ease-in;
+      pointer-events: none;
     }
   }
 
@@ -101,6 +102,7 @@ header {
       background-color: $button;
       color: $border;
       animation: fade-in 0.25s ease-in;
+      pointer-events: none;
     }
   }
 
