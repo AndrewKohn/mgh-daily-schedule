@@ -9,5 +9,16 @@
     @include mixins.DisplayFlex(flex-start, center, column, nowrap);
     height: 100%;
     width: 65%;
+    filter: opacity(1);
+    animation: show-main 1.5s ease-in;
+
+    @keyframes show-main {
+      0% {
+        filter: opacity(0);
+      }
+      100% {
+        filter: opacity(1);
+      }
+    }
   }
 }
