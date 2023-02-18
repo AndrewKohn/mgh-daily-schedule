@@ -4,12 +4,15 @@
 .schedule-list {
   @include mixins.DisplayFlex(center, center, column, nowrap);
   width: 100%;
+  min-width: 40rem;
   list-style: none;
   background-color: $border;
+  margin-bottom: 12rem;
 
   .list-headings {
     @include mixins.DisplayFlex(center, center, row, nowrap);
     width: 100%;
+    box-sizing: border-box;
 
     p {
       font-weight: 600;
@@ -20,15 +23,21 @@
 
       &:first-child {
         width: 5%;
+        min-width: 6rem;
       }
       &:nth-child(2) {
-        width: 7%;
+        width: 10%;
+        min-width: 8rem;
       }
       &:nth-child(3) {
-        width: 83%;
+        width: 80%;
+        min-width: 20rem;
+        border-right: none;
       }
       &:last-child {
         width: 5%;
+        min-width: 6rem;
+        border-left: none;
       }
     }
   }

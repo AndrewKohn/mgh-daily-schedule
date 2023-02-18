@@ -3,29 +3,90 @@
 
 .schedule-list-item {
   width: 100%;
+  padding: 0.4rem 0;
+  box-sizing: border-box;
+  border: 1px solid slategray;
+  border-top: none;
+
   .schedule-list-item-information {
-    @include mixins.DisplayFlex(center, center, row, nowrap);
+    @include mixins.DisplayFlex(center, flex-start, row, nowrap);
 
     p {
       &:first-child {
         width: 5%;
+        min-width: 6rem;
         text-align: center;
       }
       &:nth-child(2) {
-        width: 7%;
+        width: 10%;
+        min-width: 8rem;
         text-align: center;
       }
-      &:nth-child(3) {
-        width: 83%;
+      // &:nth-child(3) {
+      //   width: 83%;
+      // }
+    }
+
+    .activity-container {
+      width: 80%;
+      min-width: 20rem;
+
+      .activity-title {
+        @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
+        cursor: pointer;
+        position: relative;
+        margin-left: 1.2rem;
+
+        &::marker {
+          content: '';
+        }
+
+        &::after {
+          position: absolute;
+          right: 0;
+          transform: translateX(-50%);
+          content: '►';
+        }
+      }
+
+      .activity-details {
+        background-color: red;
+        width: 95%;
+        text-align: left;
+        margin: 0.4rem 2.4rem;
+        filter: opacity(1);
+        animation: show-details 0.25s ease-in;
+
+        @keyframes show-details {
+          0% {
+            filter: opacity(0);
+          }
+          100% {
+            filter: opacity(1);
+          }
+        }
       }
     }
 
-    span {
-      @include mixins.DisplayFlex(center, center, row, nowrap);
-      width: 5%;
+    .activity-container[open] {
+      border-radius: 5px;
+      background-color: rgba(0, 0, 0, 0.6);
+      transition: background-color 0.5s;
     }
-    .checkbox {
-      accent-color: $button;
+
+    .activity-container[open] .activity-title::after {
+      content: '▼';
+    }
+
+    .checkbox-container {
+      width: 5%;
+      min-width: 6rem;
+
+      .checkbox {
+        width: 100%;
+        accent-color: $button;
+        cursor: pointer;
+      }
     }
   }
 }
