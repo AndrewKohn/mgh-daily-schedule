@@ -1,26 +1,26 @@
 import './ScheduleListItem.scss';
+import { BsFillCaretRightFill } from 'react-icons/bs';
 
 interface Props {}
 
 const ScheduleListItem = ({}) => {
   return (
-    <li>
-      <span>
-        <p>10:45</p>
-      </span>
-      <span>
-        <p>Doe, J</p>
-      </span>
-      <span>
-        <p>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Saepe maxime
-          sequi porro accusamus rem nulla, voluptatibus possimus, earum, est
-          dicta fugit sit quia et. Dolor laborum explicabo iure excepturi
-          sapiente.
-        </p>
-      </span>
-      <span>
-        <input className="checkbox" type="checkbox" />
+    <li className="schedule-list-item">
+      <span className="schedule-list-item-information">
+        <p>10AM</p>
+        <p>Doe, Jane</p>
+        <details className="activity-container">
+          <summary className="activity-title">Activity Title</summary>
+          <p className="activity-details">
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut
+            consequuntur odit nemo repudiandae. Deserunt numquam nulla qui error
+            ipsum, quas maiores quasi asperiores odio labore aliquid unde facere
+            at tenetur.
+          </p>
+        </details>
+        <span className="checkbox-container">
+          <input className="checkbox" type="checkbox" />
+        </span>
       </span>
     </li>
   );
