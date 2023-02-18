@@ -1,0 +1,32 @@
+@use '../../styles/mixins';
+@import '../../styles/variables';
+
+.footer {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 0.8rem 0 0.4rem 0;
+  gap: 0.4rem;
+
+  .footer-text {
+    font-size: 1.2rem;
+
+    a {
+      &:link,
+      &:visited {
+        text-decoration: none;
+        color: $button;
+      }
+      &:hover,
+      &:active {
+        color: $text;
+      }
+    }
+  }
+
+  .date {
+    font-size: 1.2rem;
+  }
+}

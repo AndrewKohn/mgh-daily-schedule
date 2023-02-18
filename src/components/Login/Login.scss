@@ -1,0 +1,17 @@
+@use '../../styles/mixins';
+@import '../../styles/variables';
+
+.login-form {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  gap: 3.2rem;
+
+  .username-container {
+    @include mixins.DisplayFlex(center, flex-start, column, nowrap);
+    gap: 0.4rem;
+  }
+
+  .password-container {
+    @include mixins.DisplayFlex(center, flex-start, column, nowrap);
+    gap: 0.4rem;
+  }
+}
