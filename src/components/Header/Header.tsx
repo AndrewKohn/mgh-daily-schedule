@@ -1,46 +1,38 @@
 import './Header.scss';
 import { BsFillCaretRightFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import StaffShiftContext from '../../store/StaffShiftContext';
 
 interface Props {}
 
-const Header = ({}) => {
-  const [isDayShift, setIsDayShift] = useState<boolean>(true);
-  const [isClearviewHouse, setIsClearviewHouse] = useState<boolean>(true);
+const Header = ({}: Props) => {
+  const staffShiftContext = useContext(StaffShiftContext);
 
   // House Buttons
-  const houseButtonHandler = () => {
-    setIsClearviewHouse(!isClearviewHouse);
+  const changeCVHouseButtonColor = (currentHouse: boolean) => {
+    return currentHouse ? 'house-button selected-house' : 'house-button';
   };
 
-  const changeCVHouseButtonColor = (selectedHouse: boolean) => {
-    return isClearviewHouse ? 'house-button selected-house' : 'house-button';
+  const changeWLHouseButtonColor = (currentHouse: boolean) => {
+    return !currentHouse ? 'house-button selected-house' : 'house-button';
   };
 
-  const changeWLHouseButtonColor = (selectedHouse: boolean) => {
-    return !isClearviewHouse ? 'house-button selected-house' : 'house-button';
-  };
-
-  const changeArrowDirection = (selectedHouse: boolean) => {
-    return isClearviewHouse ? 'icon left-icon' : 'icon';
+  const changeArrowDirection = (currentHouse: boolean) => {
+    return currentHouse ? 'icon left-icon' : 'icon';
   };
 
   // Shift Buttons
-  const shiftButtonHandler = () => {
-    setIsDayShift(!isDayShift);
+  const changeDayShiftButtonColor = (currentShift: boolean) => {
+    return currentShift ? 'shift-button selected-shift' : 'shift-button';
   };
 
-  const changeDayShiftButtonColor = (selectedShift: boolean) => {
-    return isDayShift ? 'shift-button selected-shift' : 'shift-button';
-  };
-
-  const changeNightShiftButtonColor = (selectedShift: boolean) => {
-    return !isDayShift ? 'shift-button selected-shift' : 'shift-button';
+  const changeNightShiftButtonColor = (currentShift: boolean) => {
+    return !currentShift ? 'shift-button selected-shift' : 'shift-button';
   };
 
   useEffect(() => {
     // Adjust favicon by shift
-    isDayShift
+    staffShiftContext.isDayShift
       ? document
           .getElementById('favicon')
           ?.setAttribute('href', './src/icons/sun.png')
@@ -49,14 +41,14 @@ const Header = ({}) => {
           ?.setAttribute('href', './src/icons/moon.png');
 
     // Adjust page title by house
-    isClearviewHouse
-      ? isDayShift
+    staffShiftContext.isClearViewHouse
+      ? staffShiftContext.isDayShift
         ? (document.title = 'Clearview Day Schedule')
         : (document.title = 'Clearview Night Schedule')
-      : isDayShift
+      : staffShiftContext.isDayShift
       ? (document.title = 'Williston Day Schedule')
       : (document.title = 'Williston Night Schedule');
-  }, [isClearviewHouse, isDayShift]);
+  }, [staffShiftContext.isClearViewHouse, staffShiftContext.isDayShift]);
 
   return (
     <header>
@@ -67,19 +59,26 @@ const Header = ({}) => {
 
       <div className="house-button-wrapper">
         <button
-          onClick={houseButtonHandler}
-          className={changeCVHouseButtonColor(isClearviewHouse)}
+          onClick={staffShiftContext.onHouseChange}
+          className={changeCVHouseButtonColor(
+            staffShiftContext.isClearViewHouse
+          )}
         >
           <span>Clearview</span>
         </button>
-        <button onClick={houseButtonHandler} className="house-button">
+        <button
+          onClick={staffShiftContext.onHouseChange}
+          className="house-button"
+        >
           <BsFillCaretRightFill
-            className={changeArrowDirection(isClearviewHouse)}
+            className={changeArrowDirection(staffShiftContext.isClearViewHouse)}
           />
         </button>
         <button
-          onClick={houseButtonHandler}
-          className={changeWLHouseButtonColor(isClearviewHouse)}
+          onClick={staffShiftContext.onHouseChange}
+          className={changeWLHouseButtonColor(
+            staffShiftContext.isClearViewHouse
+          )}
         >
           <span>Williston</span>
         </button>
@@ -87,14 +86,14 @@ const Header = ({}) => {
 
       <div className="shift-button-wrapper">
         <button
-          onClick={shiftButtonHandler}
-          className={changeDayShiftButtonColor(isDayShift)}
+          onClick={staffShiftContext.onStaffShiftChange}
+          className={changeDayShiftButtonColor(staffShiftContext.isDayShift)}
         >
           Day Shift
         </button>
         <button
-          onClick={shiftButtonHandler}
-          className={changeNightShiftButtonColor(isDayShift)}
+          onClick={staffShiftContext.onStaffShiftChange}
+          className={changeNightShiftButtonColor(staffShiftContext.isDayShift)}
         >
           Night Shift
         </button>

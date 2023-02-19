@@ -1,5 +1,6 @@
-import { ChangeEvent, Fragment } from 'react';
+import { Fragment, useContext } from 'react';
 import * as ReactDOM from 'react-dom';
+import AdminContext from '../../store/AdminContext';
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
 import './Login.scss';
@@ -7,6 +8,8 @@ import './Login.scss';
 interface Props {}
 
 const Login = ({}) => {
+  const adminContext = useContext(AdminContext);
+
   const submitHandler = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
   };
