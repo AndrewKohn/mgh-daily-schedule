@@ -7,11 +7,26 @@
 
   .username-container {
     @include mixins.DisplayFlex(center, flex-start, column, nowrap);
-    gap: 0.4rem;
   }
 
   .password-container {
     @include mixins.DisplayFlex(center, flex-start, column, nowrap);
-    gap: 0.4rem;
+  }
+
+  label {
+    letter-spacing: 1px;
+  }
+
+  input {
+    margin-top: 0.8rem;
+    padding: 0.8rem 0.4rem;
+    border-radius: 5px;
+    border: 1px solid $button;
+    background-color: $border;
+    color: $text;
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 2px $button;
+    }
   }
 }
