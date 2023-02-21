@@ -19,12 +19,18 @@ export const AdminContextProvider: React.FC<Props> = ({
     console.log('is Logged in: ', isLoggedIn);
   }, [isLoggedIn]);
 
+  const loginHandler = (username: string, password: string) => {
+    username === 'testLogin' && password === 'zulu123'
+      ? setIsLoggedIn(true)
+      : setIsLoggedIn(false);
+  };
+
   return (
     <AdminContext.Provider
       value={{
         isLoggedIn: isLoggedIn,
         onLogout: () => setIsLoggedIn(false),
-        onLogIn: () => setIsLoggedIn(true),
+        onLogIn: (username, password) => loginHandler(username, password),
       }}
     >
       {children}
