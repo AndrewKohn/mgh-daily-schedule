@@ -2,7 +2,7 @@ import './Card.scss';
 
 interface Props {
   children: React.ReactNode;
-  classes: string;
+  classes?: string;
 }
 
 const Card = ({ children, classes }: Props) => {
