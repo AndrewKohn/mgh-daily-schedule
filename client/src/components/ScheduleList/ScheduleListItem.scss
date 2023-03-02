@@ -8,6 +8,10 @@
   border: 1px solid slategray;
   border-top: none;
 
+  &:hover {
+    background-color: rgba(112, 128, 144, 0.055);
+  }
+
   .schedule-list-item-information {
     @include mixins.DisplayFlex(center, flex-start, row, nowrap);
 
@@ -47,10 +51,31 @@
           transform: translateX(-50%);
           content: '►';
         }
+
+        .important {
+          @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
+          position: relative;
+          margin-right: 1.2rem;
+          color: $button;
+          z-index: 1;
+
+          &::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 90%;
+            background-color: $background;
+            border-radius: 50%;
+            z-index: -1;
+          }
+        }
       }
 
       .activity-details {
-        background-color: red;
+        background-color: rgba(255, 0, 0, 0.082);
         width: 95%;
         text-align: left;
         margin: 0.4rem 2.4rem;
@@ -78,9 +103,25 @@
       content: '▼';
     }
 
-    .checkbox-container {
+    .action-container {
       width: 5%;
       min-width: 6rem;
+
+      .edit-button {
+        width: 100%;
+        cursor: pointer;
+        background: none;
+        border: none;
+
+        .edit-icon {
+          padding-top: 0.2rem;
+          color: $header;
+
+          &:hover {
+            color: $text;
+          }
+        }
+      }
 
       .checkbox {
         width: 100%;
