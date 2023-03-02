@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import * as ReactDOM from 'react-dom';
 import Card from '../Card/Card';
 import './Modal.scss';
 
@@ -15,13 +16,18 @@ const Modal = ({ children }: Props) => {
 
   return (
     <Fragment>
-      {!isBackdropClicked && (
+      {ReactDOM.createPortal(
         <Fragment>
-          <div className="backdrop" onClick={backdropClickHandler}></div>
-          <div className="modal">
-            <Card>{children}</Card>
-          </div>
-        </Fragment>
+          {!isBackdropClicked && (
+            <Fragment>
+              <div className="backdrop" onClick={backdropClickHandler}></div>
+              <div className="modal">
+                <Card>{children}</Card>
+              </div>
+            </Fragment>
+          )}
+        </Fragment>,
+        document.getElementById('modal-root') as HTMLElement
       )}
     </Fragment>
   );

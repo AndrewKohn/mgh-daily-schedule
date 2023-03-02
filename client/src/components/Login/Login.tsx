@@ -1,5 +1,4 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
-import * as ReactDOM from 'react-dom';
 import AdminContext from '../../store/AdminContext';
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
@@ -50,42 +49,39 @@ const Login = ({}) => {
 
   return (
     <Fragment>
-      {ReactDOM.createPortal(
-        <Modal>
-          <form onSubmit={submitHandler} className="login-form">
-            <div className="username-container">
-              <label htmlFor="username">Username</label>
-              <input
-                onChange={e => userInputChangeHandler(e.target.value)}
-                onBlur={e => validateUsernameHandler(e.target.value)}
-                className={isUsernameValid ? '' : 'invalid'}
-                id="username"
-              />
-            </div>
-            <div className="password-container">
-              <label htmlFor="password">Password</label>
-              <input
-                onChange={e => {
-                  passwordInputChangeHandler(e.target.value);
-                }}
-                onBlur={e => validatePasswordHandler(e.target.value)}
-                className={isPasswordValid ? '' : 'invalid'}
-                id="password"
-                type="password"
-              />
-            </div>
-            {
-              // Add disable class if user/pw don't meet min requirements.
-              !adminContext.isLoggedIn ? (
-                <Button>Login</Button>
-              ) : (
-                <Button>logout</Button>
-              )
-            }
-          </form>
-        </Modal>,
-        document.getElementById('modal-root') as HTMLElement
-      )}
+      <Modal>
+        <form onSubmit={submitHandler} className="login-form">
+          <div className="username-container">
+            <label htmlFor="username">Username</label>
+            <input
+              onChange={e => userInputChangeHandler(e.target.value)}
+              onBlur={e => validateUsernameHandler(e.target.value)}
+              className={isUsernameValid ? '' : 'invalid'}
+              id="username"
+            />
+          </div>
+          <div className="password-container">
+            <label htmlFor="password">Password</label>
+            <input
+              onChange={e => {
+                passwordInputChangeHandler(e.target.value);
+              }}
+              onBlur={e => validatePasswordHandler(e.target.value)}
+              className={isPasswordValid ? '' : 'invalid'}
+              id="password"
+              type="password"
+            />
+          </div>
+          {
+            // Add disable class if user/pw don't meet min requirements.
+            !adminContext.isLoggedIn ? (
+              <Button>Login</Button>
+            ) : (
+              <Button>logout</Button>
+            )
+          }
+        </form>
+      </Modal>
     </Fragment>
   );
 };
