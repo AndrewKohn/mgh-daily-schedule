@@ -8,19 +8,45 @@ interface Props {}
 const ScheduleListItem = ({}) => {
   const [scheduleItem, setScheduleItem] = useState<ScheduleItem>();
 
-  // useEffect(() => {
-  //   setScheduleItem({
-  //     id: 11,
-  //     patientName: 'Dane Joe',
-  //     activityTime: 9,
-  //     activityTitle: 'Medication Administration',
-  //     activityNote:
-  //       'Insulin instructions...  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut consequuntur odit nemo repudiandae. Deserunt numquam nulla qui error ipsum, quas maiores quasi asperiores odio labore aliquid unde facere at tenetur.',
-  //     isImportant: true,
-  //     isComplete: false,
-  //     isEdit: true,
-  //   });
-  // }, []);
+  useEffect(() => {
+    setScheduleItem({
+      id: 11,
+      patientName: 'Dane Joe',
+      activityTime: 9,
+      activityTitle: 'Medication Administration',
+      activityNote:
+        'Insulin instructions...  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut consequuntur odit nemo repudiandae. Deserunt numquam nulla qui error ipsum, quas maiores quasi asperiores odio labore aliquid unde facere at tenetur.',
+      isImportant: true,
+      isComplete: false,
+      isEdit: true,
+    });
+  }, []);
+
+  const activityImportance = () => {
+    return scheduleItem?.isImportant ? (
+      <span className="important">
+        <BsFillExclamationCircleFill />
+      </span>
+    ) : (
+      ''
+    );
+  };
+
+  const activityAction = () => {
+    return scheduleItem?.isEdit ? (
+      <button className="edit-button">
+        <div className="edit-icon">
+          <BsPencilSquare />
+        </div>
+      </button>
+    ) : (
+      <input
+        className="checkbox"
+        type="checkbox"
+        defaultChecked={scheduleItem?.isComplete}
+      />
+    );
+  };
 
   return (
     <li className="schedule-list-item">
@@ -29,33 +55,13 @@ const ScheduleListItem = ({}) => {
         <p data-testid="required-name">{scheduleItem?.patientName}</p>
         <details className="activity-container">
           <summary data-testid="required-activity" className="activity-title">
-            {scheduleItem?.isImportant ? (
-              <span className="important">
-                <BsFillExclamationCircleFill />
-              </span>
-            ) : (
-              ''
-            )}
+            {activityImportance()}
 
             {scheduleItem?.activityTitle}
           </summary>
           <p className="activity-details">{scheduleItem?.activityNote}</p>
         </details>
-        <span className="action-container">
-          {scheduleItem?.isEdit ? (
-            <button className="edit-button">
-              <div className="edit-icon">
-                <BsPencilSquare />
-              </div>
-            </button>
-          ) : (
-            <input
-              className="checkbox"
-              type="checkbox"
-              defaultChecked={scheduleItem?.isComplete}
-            />
-          )}
-        </span>
+        <span className="action-container">{activityAction()}</span>
       </span>
     </li>
   );
