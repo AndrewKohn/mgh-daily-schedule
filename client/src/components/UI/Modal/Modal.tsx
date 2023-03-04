@@ -1,17 +1,21 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import * as ReactDOM from 'react-dom';
 import Card from '../Card/Card';
 import './Modal.scss';
 
 interface Props {
+  isVisible?: boolean;
+  setIsVisible?: React.Dispatch<React.SetStateAction<boolean>> | any;
   children: React.ReactNode;
 }
 
-const Modal = ({ children }: Props) => {
+const Modal = ({ isVisible, setIsVisible, children }: Props) => {
   const [isBackdropClicked, setIsBackdropClicked] = useState<boolean>(false);
 
   const backdropClickHandler = () => {
     setIsBackdropClicked(true);
+    if (typeof isVisible === undefined || isVisible === true)
+      setIsVisible(false);
   };
 
   return (
