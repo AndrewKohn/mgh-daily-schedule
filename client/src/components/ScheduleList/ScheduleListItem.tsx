@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { BsFillExclamationCircleFill, BsPencilSquare } from 'react-icons/bs';
 import './ScheduleListItem.scss';
 import ScheduleItem from '../../store/ScheduleListModel';
+import AdminContext from '../../store/AdminContext';
 
 interface Props {}
 
 const ScheduleListItem = ({}) => {
   const [scheduleItem, setScheduleItem] = useState<ScheduleItem>();
+  const adminContext = useContext(AdminContext);
 
   useEffect(() => {
     setScheduleItem({
@@ -18,7 +20,7 @@ const ScheduleListItem = ({}) => {
         'Insulin instructions...  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut consequuntur odit nemo repudiandae. Deserunt numquam nulla qui error ipsum, quas maiores quasi asperiores odio labore aliquid unde facere at tenetur.',
       isImportant: true,
       isComplete: false,
-      isEdit: true,
+      isEdit: false,
     });
   }, []);
 
@@ -33,7 +35,7 @@ const ScheduleListItem = ({}) => {
   };
 
   const activityAction = () => {
-    return scheduleItem?.isEdit ? (
+    return adminContext.isLoggedIn ? (
       <button className="edit-button">
         <div className="edit-icon">
           <BsPencilSquare />
