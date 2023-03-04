@@ -58,6 +58,7 @@ const Login = ({}) => {
               onBlur={e => validateUsernameHandler(e.target.value)}
               className={isUsernameValid ? '' : 'invalid'}
               id="username"
+              autoFocus
             />
           </div>
           <div className="password-container">
