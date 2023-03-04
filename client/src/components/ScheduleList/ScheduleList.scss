@@ -7,7 +7,6 @@
   min-width: 40rem;
   list-style: none;
   background-color: $border;
-  margin-bottom: 12rem;
 
   .list-headings {
     @include mixins.DisplayFlex(center, center, row, nowrap);
@@ -40,5 +39,26 @@
         border-left: none;
       }
     }
+  }
+}
+
+.add-icon-container {
+  margin-top: 2rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  .add-icon {
+    height: 3.2rem;
+    width: 3.2rem;
+    color: $header;
+  }
+
+  &:hover .add-icon {
+    color: #cfcfcf;
+  }
+
+  &:active .add-icon {
+    transform: scale(0.95);
   }
 }
