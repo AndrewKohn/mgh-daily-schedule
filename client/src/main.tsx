@@ -4,13 +4,14 @@ import App from './App';
 import './index.scss';
 import { AdminContextProvider } from './store/AdminContext';
 import { StaffShiftContextProvider } from './store/StaffShiftContext';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  <BrowserRouter>
     <AdminContextProvider>
       <StaffShiftContextProvider>
         <App />
       </StaffShiftContextProvider>
     </AdminContextProvider>
-  </React.StrictMode>
+  </BrowserRouter>
 );
