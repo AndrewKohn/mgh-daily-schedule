@@ -1,0 +1,72 @@
+@use '../../styles/mixins';
+@import '../../styles/variables';
+
+.schedule-form {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  gap: 2rem;
+  width: 60rem;
+
+  .form-title {
+  }
+
+  .form--label {
+  }
+
+  .form--input-select {
+  }
+
+  .form--input-container {
+    @include mixins.DisplayFlex(space-between, flex-start, row, nowrap);
+    width: 100%;
+
+    .form--selection-wrapper {
+      @include mixins.DisplayFlex(flex-start, center, row, nowrap);
+      gap: 1.2rem;
+
+      .important-checkbox {
+        accent-color: $button;
+        cursor: pointer;
+      }
+
+      .icon {
+        @include mixins.DisplayFlex(center, center, column, nowrap);
+        background-color: transparent;
+        transform: scale(1.35);
+        border: none;
+        cursor: pointer;
+        padding: 2px;
+        border-radius: 3px;
+      }
+
+      .icon--add:hover {
+        background-color: rgba(0, 128, 0, 0.1);
+      }
+
+      .icon--delete {
+        color: red;
+
+        &:hover {
+          background-color: rgba(255, 0, 0, 0.15);
+        }
+      }
+    }
+  }
+  .form--input-wrapper {
+    @include mixins.DisplayFlex(center, flex-start, column, nowrap);
+    width: 100%;
+    gap: 0.8rem;
+
+    .form--input {
+      width: 100%;
+    }
+
+    .form--input-textarea {
+      min-height: 6rem;
+      width: 100%;
+      resize: vertical;
+    }
+
+    .form--button {
+    }
+  }
+}
