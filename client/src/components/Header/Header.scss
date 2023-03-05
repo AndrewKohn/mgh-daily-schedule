@@ -6,10 +6,26 @@ header {
   gap: 2rem;
   padding: 10rem 0 3.2rem 0;
   width: 100%;
+  position: relative;
+
+  .back-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(50%, 50%) scale(1);
+    color: $button;
+    height: 4.4rem;
+    width: 4.4rem;
+
+    &:active {
+      transform: translate(50%, 50%) scale(0.95);
+    }
+  }
 
   .primary-heading-container {
     @include mixins.DisplayFlex(center, center, column, nowrap);
     gap: 2rem;
+
     h1 {
       color: $header;
       font-size: 4rem;

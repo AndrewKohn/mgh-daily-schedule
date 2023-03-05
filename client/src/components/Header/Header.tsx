@@ -1,7 +1,12 @@
 import './Header.scss';
-import { BsFillCaretRightFill } from 'react-icons/bs';
+import {
+  BsArrowLeftSquareFill,
+  BsChevronLeft,
+  BsFillCaretRightFill,
+} from 'react-icons/bs';
 import { useContext, useEffect, useState } from 'react';
 import StaffShiftContext from '../../store/StaffShiftContext';
+import { Link } from 'react-router-dom';
 
 interface Props {}
 
@@ -52,6 +57,9 @@ const Header = ({}: Props) => {
 
   return (
     <header>
+      <Link to="/">
+        <BsArrowLeftSquareFill className="back-icon" />
+      </Link>
       <div className="primary-heading-container">
         <h1>Morning Glory Homes</h1>
         <p>Daily schedule</p>
