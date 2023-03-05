@@ -47,38 +47,51 @@ const Login = ({}) => {
       : setIsPasswordValid(false);
   };
 
+  const logoutHandler = () => {
+    setUsername('');
+    setPassword('');
+    adminContext.onLogout();
+  };
+
   return (
     <Fragment>
       <Modal>
         <form onSubmit={submitHandler} className="login-form">
-          <div className="username-container">
-            <label htmlFor="username">Username</label>
-            <input
-              onChange={e => userInputChangeHandler(e.target.value)}
-              onBlur={e => validateUsernameHandler(e.target.value)}
-              className={isUsernameValid ? '' : 'invalid'}
-              id="username"
-              autoFocus
-            />
-          </div>
-          <div className="password-container">
-            <label htmlFor="password">Password</label>
-            <input
-              onChange={e => {
-                passwordInputChangeHandler(e.target.value);
-              }}
-              onBlur={e => validatePasswordHandler(e.target.value)}
-              className={isPasswordValid ? '' : 'invalid'}
-              id="password"
-              type="password"
-            />
-          </div>
+          {!adminContext.isLoggedIn && (
+            <div className="username-container">
+              <label htmlFor="username">Username</label>
+              <input
+                onChange={e => userInputChangeHandler(e.target.value)}
+                onBlur={e => validateUsernameHandler(e.target.value)}
+                className={isUsernameValid ? '' : 'invalid'}
+                id="username"
+                autoFocus
+              />
+            </div>
+          )}
+          {!adminContext.isLoggedIn && (
+            <div className="password-container">
+              <label htmlFor="password">Password</label>
+              <input
+                onChange={e => {
+                  passwordInputChangeHandler(e.target.value);
+                }}
+                onBlur={e => validatePasswordHandler(e.target.value)}
+                className={isPasswordValid ? '' : 'invalid'}
+                id="password"
+                type="password"
+              />
+            </div>
+          )}
+
           {
             // Add disable class if user/pw don't meet min requirements.
             !adminContext.isLoggedIn ? (
-              <Button>Login</Button>
+              <Button buttonType="submit">Login</Button>
             ) : (
-              <Button>logout</Button>
+              <Button buttonType="button" buttonHandler={logoutHandler}>
+                logout
+              </Button>
             )
           }
         </form>
