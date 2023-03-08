@@ -1,16 +1,14 @@
 import './Header.scss';
-import {
-  BsArrowLeftSquareFill,
-  BsChevronLeft,
-  BsFillCaretRightFill,
-} from 'react-icons/bs';
-import { useContext, useEffect, useState } from 'react';
+import { BsArrowLeftSquareFill, BsFillCaretRightFill } from 'react-icons/bs';
+import { useContext, useEffect } from 'react';
 import StaffShiftContext from '../../store/StaffShiftContext';
 import { Link } from 'react-router-dom';
 
-interface Props {}
+interface Props {
+  title: string;
+}
 
-const Header = ({}: Props) => {
+const Header = ({ title }: Props) => {
   const staffShiftContext = useContext(StaffShiftContext);
 
   // House Buttons
@@ -61,8 +59,8 @@ const Header = ({}: Props) => {
         <BsArrowLeftSquareFill className="back-icon" />
       </Link>
       <div className="primary-heading-container">
-        <h1>Morning Glory Homes</h1>
-        <p>Daily schedule</p>
+        <h2>Morning Glory Homes</h2>
+        <p>{title} schedule</p>
       </div>
 
       <div className="house-button-wrapper">
