@@ -1,0 +1,27 @@
+@use '../../styles/mixins';
+
+.calendar-container {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  background-color: red;
+  min-width: 10.2rem;
+  margin-bottom: 12rem;
+
+  .month-title {
+    font-size: 2.4rem;
+  }
+
+  .month-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 3px solid transparent;
+    gap: 3px;
+    background-color: darkblue;
+    width: 100%;
+
+    .day-title {
+      text-align: center;
+      padding: 0.4rem 0;
+      background-color: darkolivegreen;
+    }
+  }
+}
