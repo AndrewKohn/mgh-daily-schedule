@@ -12,7 +12,12 @@ interface Props {}
 const Home = ({}) => {
   const [showLogin, setShowLogin] = useState<boolean>(false);
 
-  useEffect(() => console.log(showLogin), [showLogin]);
+  useEffect(() => {
+    document
+      .getElementById('favicon')
+      ?.setAttribute('href', '../src/icons/morning-glory.png');
+    document.title = 'MGH Daily Schedule';
+  }, []);
 
   const showLoginHandler = () => {
     setShowLogin(false);
@@ -24,7 +29,7 @@ const Home = ({}) => {
   return (
     <div className="login-container">
       <Card classes="nav-card">
-        <h2 className="login-heading">Morning Glory Homes</h2>
+        <h1 className="login-heading">Morning Glory Homes</h1>
         <nav className="home-nav">
           <Link to="/daily-schedule" className="link">
             <img
