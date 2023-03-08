@@ -38,20 +38,6 @@ const Calendar = ({}) => {
 
   const setCalendarData = (start: Date, end: Date) => {
     // Starting w/ previous month
-    let previousMonthDayCount = start.getDate();
-    const previousMonthEnd = new Date(
-      start.getFullYear(),
-      start.getMonth(),
-      0
-    ).getDate();
-
-    console.log(previousMonthEnd, previousMonthDayCount);
-    console.log('==========PREV MONTH');
-    for (let i = 0; i <= previousMonthEnd - start.getDate(); i++) {
-      console.log(
-        new Date(start.getFullYear(), start.getMonth(), previousMonthDayCount++)
-      );
-    }
 
     // Ending with next month
     let nextMonthDayCount = end.getDate();
