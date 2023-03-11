@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FcCheckmark } from 'react-icons/fc';
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 import Modal from '../UI/Modal/Modal';
 import './ScheduleForm.scss';
+import optionTimes from '../../store/OptionTimes';
 
 // [TODO]
-// Add/Remove patient button handlers
+// Tests:
+// getMilitaryTime(), Add/remove patient functions, form submission
 
 interface Props {
   submitFormHandler: (
     e: any,
     patientName: string,
-    activityTime: string,
+    activityTime: number,
     activityTitle: string,
     isImportant: boolean,
     activityNote?: string
@@ -25,33 +27,6 @@ const ScheduleForm = ({
   isVisible,
   setIsVisible,
 }: Props) => {
-  const optionTimes: string[] = [
-    '12AM',
-    '1AM',
-    '2AM',
-    '3AM',
-    '4AM',
-    '5AM',
-    '6AM',
-    '7AM',
-    '8AM',
-    '9AM',
-    '10AM',
-    '11AM',
-    '12PM',
-    '1PM',
-    '2PM',
-    '3PM',
-    '4PM',
-    '5PM',
-    '6PM',
-    '7PM',
-    '8PM',
-    '9PM',
-    '10PM',
-    '11PM',
-  ];
-
   let patientNames = [
     'Adams, Dorothy',
     'Butter, Peanut',
@@ -61,11 +36,31 @@ const ScheduleForm = ({
     'Rian, Anya',
   ];
 
-  const [activityTime, setActivityTime] = useState<string>(optionTimes[0]);
+  const [activityTime, setActivityTime] = useState<number>(0);
   const [patientName, setPatientName] = useState<string>(patientNames[0]);
   const [activityTitle, setActivityTitle] = useState<string>('');
   const [activityNote, setActivityNote] = useState<string>('');
   const [isImportant, setIsImportant] = useState<boolean>(false);
+
+  const getMilitaryTime = (selectedTime: string) => {
+    const time = selectedTime.split('');
+
+    if (time.length > 3) {
+      if (selectedTime === '12AM') return setActivityTime(0);
+
+      time[2] + time[3] === 'PM' && time[0] + time[1] !== '12'
+        ? setActivityTime(Number(time[0] + time[1]) + 12)
+        : setActivityTime(Number(time[0] + time[1]));
+    } else {
+      time[1] + time[2] === 'PM'
+        ? setActivityTime(Number(time[0]) + 12)
+        : setActivityTime(Number(time[0]));
+    }
+  };
+
+  // optionTimes.map((selectedTime: string, key: number) =>
+  //   console.log(selectedTime, key)
+  // );
 
   // useEffect(() => {
   //   console.log('time', time);
@@ -106,8 +101,10 @@ const ScheduleForm = ({
               id="time"
               name="time"
               className="form--input-select"
-              value={activityTime}
-              onChange={e => setActivityTime(e.target.value)}
+              // value={activityTime}
+              onChange={e => {
+                getMilitaryTime(e.target.value);
+              }}
               autoFocus
             >
               {optionTimes.map((selectedTime: string, key: number) => (
