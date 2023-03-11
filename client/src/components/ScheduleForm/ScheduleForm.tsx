@@ -1,18 +1,30 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FcCheckmark } from 'react-icons/fc';
-import { IoMdRemoveCircleOutline } from 'react-icons/io';
+import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 import Modal from '../UI/Modal/Modal';
 import './ScheduleForm.scss';
 
+// [TODO]
+// Add/Remove patient button handlers
+
 interface Props {
+  submitFormHandler: (
+    e: any,
+    patientName: string,
+    activityTime: string,
+    activityTitle: string,
+    isImportant: boolean,
+    activityNote?: string
+  ) => void;
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
-  const [time, setTime] = useState<string>('');
-  const [patient, setPatient] = useState<string>('');
-
+const ScheduleForm = ({
+  submitFormHandler,
+  isVisible,
+  setIsVisible,
+}: Props) => {
   const optionTimes: string[] = [
     '12AM',
     '1AM',
@@ -40,7 +52,7 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
     '11PM',
   ];
 
-  const patientNames = [
+  let patientNames = [
     'Adams, Dorothy',
     'Butter, Peanut',
     'Wills, Rean',
@@ -49,23 +61,41 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
     'Rian, Anya',
   ];
 
+  const [activityTime, setActivityTime] = useState<string>(optionTimes[0]);
+  const [patientName, setPatientName] = useState<string>(patientNames[0]);
+  const [activityTitle, setActivityTitle] = useState<string>('');
+  const [activityNote, setActivityNote] = useState<string>('');
+  const [isImportant, setIsImportant] = useState<boolean>(false);
+
   // useEffect(() => {
   //   console.log('time', time);
   // }, [time]);
 
-  const setTimeHandler = (e: React.FormEvent<HTMLSelectElement>) => {
-    const target = e.target as HTMLSelectElement;
-    setTime(target.value);
-  };
+  // const setActivityTimeHandler = (e: React.FormEvent<HTMLSelectElement>) => {
+  //   const target = e.target as HTMLSelectElement;
+  //   setActivityTime(Number(target.value));
+  // };
 
-  const setPatientHandler = (e: React.FormEvent<HTMLSelectElement>) => {
-    const target = e.target as HTMLSelectElement;
-    setPatient(target.value);
-  };
+  // const setPatientNameHandler = (e: React.FormEvent<HTMLSelectElement>) => {
+  //   const target = e.target as HTMLSelectElement;
+  //   setPatientName(target.value);
+  // };
 
   return (
     <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
-      <form className="schedule-form">
+      <form
+        onSubmit={e =>
+          submitFormHandler(
+            e,
+            patientName,
+            activityTime,
+            activityTitle,
+            isImportant,
+            activityNote
+          )
+        }
+        className="schedule-form"
+      >
         <h2 className="form-title">New Activity</h2>
         <div className="form--input-container">
           <div className="form--selection-wrapper">
@@ -76,8 +106,8 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
               id="time"
               name="time"
               className="form--input-select"
-              value={time}
-              onChange={setTimeHandler}
+              value={activityTime}
+              onChange={e => setActivityTime(e.target.value)}
               autoFocus
             >
               {optionTimes.map((selectedTime: string, key: number) => (
@@ -93,15 +123,15 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
               id="patient"
               name="patient"
               className="form--input-select"
-              value={patient}
-              onChange={setPatientHandler}
+              value={patientName}
+              onChange={e => setPatientName(e.target.value)}
             >
               {patientNames.map((name: string, key: number) => (
                 <option key={key}>{name}</option>
               ))}
             </select>
             <button className="icon icon--add" type="button">
-              <FcCheckmark />
+              <IoMdAddCircleOutline />
             </button>
             <button className="icon icon--delete" type="button">
               <IoMdRemoveCircleOutline />
@@ -113,6 +143,8 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
               id="activity-importance"
               className="important-checkbox"
               type="checkbox"
+              checked={isImportant}
+              onChange={e => setIsImportant(e.target.checked)}
             />
           </div>
         </div>
@@ -125,6 +157,8 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
             id="activity-title"
             name="activity-title"
             type="text"
+            value={activityTitle}
+            onChange={e => setActivityTitle(e.target.value)}
           />
         </div>
         <div className="form--input-wrapper">
@@ -135,6 +169,8 @@ const ScheduleForm = ({ isVisible, setIsVisible }: Props) => {
             className="form--input-textarea"
             id="activity-notes"
             name="activity-notes"
+            value={activityNote}
+            onChange={e => setActivityNote(e.target.value)}
           />
         </div>
         <button className="form--button" type="submit">
