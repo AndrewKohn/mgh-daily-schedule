@@ -6,49 +6,52 @@ import './ScheduleList.scss';
 import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
 
+let idCount: number = 0;
 interface Props {}
 
 const ScheduleList = ({}) => {
-  let idCount: number = 0;
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const adminContext = useContext(AdminContext);
   const [scheduleItem, setScheduleItem] = useState<ScheduleItem | undefined>(
     undefined
   );
+  const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([]);
 
-  useEffect(() => console.log(scheduleItem), []);
+  useEffect(() => console.log(scheduleItems), [scheduleItems]);
 
   const showFormHandler = (e: any) => {
     setIsVisible(true);
   };
 
+  useEffect(() => {
+    if (scheduleItem) {
+      setScheduleItems(prevState => [...prevState, scheduleItem]);
+    }
+  }, [scheduleItem]);
+
   const submitFormHandler = (
     e: any,
     patientName: string,
-    activityTime: string,
+    activityTime: number,
     activityTitle: string,
     isImportant: boolean,
     activityNote?: string
   ) => {
     e.preventDefault();
 
-    // setScheduleItem({
-    //   id: idCount++,
-    //   patientName: patientName,
-    //   activityTime: time,
-    //   activityTitle: activityTitle,
-    //   activityNote: activityNote,
-    //   isImportant: isImportant,
-    //   isComplete: false,
-    //   isEdit: false,
-    // });
+    setScheduleItem({
+      id: idCount,
+      patientName: patientName,
+      activityTime: activityTime,
+      activityTitle: activityTitle,
+      activityNote: activityNote,
+      isImportant: isImportant,
+      isComplete: false,
+      isEdit: false,
+    });
 
-    // [TODO]
-    // activityTime length can be 3 or 4.
-    console.log(activityTime);
+    idCount++;
   };
-
-  useEffect(() => console.log(scheduleItem), [scheduleItem]);
 
   return (
     <Fragment>
@@ -59,7 +62,9 @@ const ScheduleList = ({}) => {
           <p>Activity</p>
           <p>&nbsp;</p>
         </span>
-        <ScheduleListItem />
+        {scheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
+          <ScheduleListItem scheduleItem={scheduleItem} key={key} />
+        ))}
       </ul>
       {adminContext.isLoggedIn && (
         <button className="add-icon-container" onClick={showFormHandler}>
