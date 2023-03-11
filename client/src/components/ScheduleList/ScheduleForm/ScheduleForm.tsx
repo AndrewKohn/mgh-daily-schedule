@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { FcCheckmark } from 'react-icons/fc';
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
-import Modal from '../UI/Modal/Modal';
+import Modal from '../../UI/Modal/Modal';
 import './ScheduleForm.scss';
-import optionTimes from '../../store/OptionTimes';
+import optionTimes from '../../../store/OptionTimes';
 
 // [TODO]
 // Tests:
@@ -106,6 +106,7 @@ const ScheduleForm = ({
                 getMilitaryTime(e.target.value);
               }}
               autoFocus
+              required
             >
               {optionTimes.map((selectedTime: string, key: number) => (
                 <option key={key}>{selectedTime}</option>
@@ -122,6 +123,7 @@ const ScheduleForm = ({
               className="form--input-select"
               value={patientName}
               onChange={e => setPatientName(e.target.value)}
+              required
             >
               {patientNames.map((name: string, key: number) => (
                 <option key={key}>{name}</option>
@@ -156,6 +158,7 @@ const ScheduleForm = ({
             type="text"
             value={activityTitle}
             onChange={e => setActivityTitle(e.target.value)}
+            required
           />
         </div>
         <div className="form--input-wrapper">

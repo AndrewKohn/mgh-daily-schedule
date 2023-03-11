@@ -1,7 +1,7 @@
 import { Fragment, useContext, useEffect, useState } from 'react';
 import { BsFillPlusCircleFill } from 'react-icons/bs';
 import AdminContext from '../../store/AdminContext';
-import ScheduleForm from '../ScheduleForm/ScheduleForm';
+import ScheduleForm from './ScheduleForm/ScheduleForm';
 import './ScheduleList.scss';
 import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
