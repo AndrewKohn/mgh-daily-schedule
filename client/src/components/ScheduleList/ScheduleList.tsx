@@ -30,7 +30,7 @@ const ScheduleList = ({}) => {
   }, [scheduleItem]);
 
   const submitFormHandler = (
-    e: any,
+    e: React.FormEvent<HTMLFormElement>,
     patientName: string,
     activityTime: number,
     activityTitle: string,
