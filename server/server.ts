@@ -2,8 +2,10 @@ require('dotenv').config();
 const express = require('express');
 import { Express, Request, Response, NextFunction } from 'express';
 const app: Express = express();
+const cors = require('cors');
 
 app.use(express.json());
+app.use(cors());
 
 app.use('/daily_schedule', require('./routes/DailyScheduleRoutes'));
 
