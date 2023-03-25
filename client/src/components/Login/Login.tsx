@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import AdminContext from '../../store/AdminContext';
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
@@ -54,52 +54,48 @@ const Login = ({}) => {
   };
 
   return (
-    <Fragment>
-      <Modal>
-        <form onSubmit={submitHandler} className="login-form">
-          {!adminContext.isLoggedIn && (
-            <div className="username-container">
-              <label htmlFor="username">Username</label>
-              <input
-                onChange={e => userInputChangeHandler(e.target.value)}
-                onBlur={e => validateUsernameHandler(e.target.value)}
-                className={isUsernameValid ? '' : 'invalid'}
-                id="username"
-                autoFocus
-              />
-            </div>
-          )}
-          {!adminContext.isLoggedIn && (
-            <div className="password-container">
-              <label htmlFor="password">Password</label>
-              <input
-                onChange={e => {
-                  passwordInputChangeHandler(e.target.value);
-                }}
-                onBlur={e => validatePasswordHandler(e.target.value)}
-                className={isPasswordValid ? '' : 'invalid'}
-                id="password"
-                type="password"
-              />
-            </div>
-          )}
+    <Modal>
+      <form onSubmit={submitHandler} className="login-form">
+        {!adminContext.isLoggedIn && (
+          <div className="username-container">
+            <label htmlFor="username">Username</label>
+            <input
+              onChange={e => userInputChangeHandler(e.target.value)}
+              onBlur={e => validateUsernameHandler(e.target.value)}
+              className={isUsernameValid ? '' : 'invalid'}
+              id="username"
+              autoFocus
+            />
+          </div>
+        )}
+        {!adminContext.isLoggedIn && (
+          <div className="password-container">
+            <label htmlFor="password">Password</label>
+            <input
+              onChange={e => {
+                passwordInputChangeHandler(e.target.value);
+              }}
+              onBlur={e => validatePasswordHandler(e.target.value)}
+              className={isPasswordValid ? '' : 'invalid'}
+              id="password"
+              type="password"
+            />
+          </div>
+        )}
 
-          {
-            // Add disable class if user/pw don't meet min requirements.
-            !adminContext.isLoggedIn ? (
-              <Button buttonType="submit">Login</Button>
-            ) : (
-              <Button buttonType="button" buttonHandler={logoutHandler}>
-                logout
-              </Button>
-            )
-          }
-        </form>
-      </Modal>
-    </Fragment>
+        {
+          // Add disable class if user/pw don't meet min requirements.
+          !adminContext.isLoggedIn ? (
+            <Button buttonType="submit">Login</Button>
+          ) : (
+            <Button buttonType="button" buttonHandler={logoutHandler}>
+              logout
+            </Button>
+          )
+        }
+      </form>
+    </Modal>
   );
 };
 
 export default Login;
-
-// [TODO] create new modal root in html
