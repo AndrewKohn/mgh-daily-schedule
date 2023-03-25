@@ -69,6 +69,7 @@ const Header = ({ title }: Props) => {
           className={changeCVHouseButtonColor(
             staffShiftContext.isClearViewHouse
           )}
+          data-testid="clearview-button"
         >
           <span>Clearview</span>
         </button>
@@ -85,6 +86,7 @@ const Header = ({ title }: Props) => {
           className={changeWLHouseButtonColor(
             staffShiftContext.isClearViewHouse
           )}
+          data-testid="williston-button"
         >
           <span>Williston</span>
         </button>
@@ -94,12 +96,14 @@ const Header = ({ title }: Props) => {
         <button
           onClick={staffShiftContext.onStaffShiftChange}
           className={changeDayShiftButtonColor(staffShiftContext.isDayShift)}
+          data-testid="day-shift-button"
         >
           Day Shift
         </button>
         <button
           onClick={staffShiftContext.onStaffShiftChange}
           className={changeNightShiftButtonColor(staffShiftContext.isDayShift)}
+          data-testid="night-shift-button"
         >
           Night Shift
         </button>

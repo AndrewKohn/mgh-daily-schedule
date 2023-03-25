@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import './Button.scss';
 
 interface Props {
-  children: ReactNode;
+  children?: ReactNode;
   buttonType?: any;
   buttonHandler?: () => void;
 }

@@ -1,7 +1,7 @@
 import './Card.scss';
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   classes?: string;
 }
 
