@@ -5,7 +5,7 @@ interface Props {
 }
 
 const StaffShiftContext = createContext({
-  isClearViewHouse: true,
+  isClearViewHouse: false,
   isDayShift: true,
   onHouseChange: () => {},
   onStaffShiftChange: () => {},
@@ -14,13 +14,8 @@ const StaffShiftContext = createContext({
 export const StaffShiftContextProvider: React.FC<Props> = ({
   children,
 }): JSX.Element => {
-  const [isClearviewHouse, setIsClearviewHouse] = useState<boolean>(true);
+  const [isClearviewHouse, setIsClearviewHouse] = useState<boolean>(false);
   const [isDayShift, setIsDayShift] = useState<boolean>(true);
-
-  useEffect(() => {
-    console.log('CV House: ', isClearviewHouse);
-    console.log('Shift: ', isDayShift);
-  }, [isClearviewHouse, isDayShift]);
 
   return (
     <StaffShiftContext.Provider

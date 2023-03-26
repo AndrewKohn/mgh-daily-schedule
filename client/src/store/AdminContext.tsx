@@ -5,7 +5,7 @@ interface Props {
 }
 
 const AdminContext = createContext({
-  isLoggedIn: false,
+  isLoggedIn: true,
   onLogout: () => {},
   onLogIn: (username: string, password: string) => {},
 });
@@ -13,11 +13,7 @@ const AdminContext = createContext({
 export const AdminContextProvider: React.FC<Props> = ({
   children,
 }): JSX.Element => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-
-  useEffect(() => {
-    console.log('is Logged in: ', isLoggedIn);
-  }, [isLoggedIn]);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
 
   const loginHandler = (username: string, password: string) => {
     username === 'testLogin' && password === 'zulu123'
