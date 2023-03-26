@@ -6,23 +6,49 @@ import './ScheduleList.scss';
 import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
 
-let idCount: number = 0;
-interface Props {}
+let idCount: number = 1;
+interface Props {
+  dbScheduleItems: ScheduleItem[];
+  setDBScheduleItems: React.Dispatch<React.SetStateAction<ScheduleItem[]>>;
+}
 
-const ScheduleList = ({}) => {
+const ScheduleList = ({ dbScheduleItems, setDBScheduleItems }: Props) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const adminContext = useContext(AdminContext);
   const [scheduleItem, setScheduleItem] = useState<ScheduleItem | undefined>(
     undefined
   );
   const [scheduleItems, setScheduleItems] = useState<ScheduleItem[]>([]);
+  const [sortedScheduleItems, setSortedScheduleItems] = useState<
+    ScheduleItem[]
+  >([]);
 
-  useEffect(() => console.log(scheduleItems), [scheduleItems]);
-
-  const showFormHandler = (e: any) => {
-    setIsVisible(true);
+  const sortByTime = () => {
+    return [...scheduleItems].sort((a, b) => a.activityTime - b.activityTime);
   };
 
+  useEffect(() => {
+    setSortedScheduleItems(sortByTime());
+  }, [scheduleItems]);
+
+  useEffect(() => {
+    console.log(sortedScheduleItems[2]);
+  }, [sortedScheduleItems]);
+
+  // Set schedule from database
+  useEffect(() => {
+    if (dbScheduleItems) {
+      dbScheduleItems.map(dbScheduleItem => {
+        while (idCount === dbScheduleItem.id) {
+          idCount++;
+          console.log(idCount, dbScheduleItem.id);
+        }
+        setScheduleItems(prevState => [...prevState, dbScheduleItem]);
+      });
+    }
+  }, [dbScheduleItems]);
+
+  // Adds new schedule items
   useEffect(() => {
     if (scheduleItem) {
       setScheduleItems(prevState => [...prevState, scheduleItem]);
@@ -53,6 +79,10 @@ const ScheduleList = ({}) => {
     idCount++;
   };
 
+  const showFormHandler = (e: any) => {
+    setIsVisible(true);
+  };
+
   return (
     <Fragment>
       <ul className="schedule-list">
@@ -62,7 +92,7 @@ const ScheduleList = ({}) => {
           <p>Activity</p>
           <p>&nbsp;</p>
         </span>
-        {scheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
+        {sortedScheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
           <ScheduleListItem scheduleItem={scheduleItem} key={key} />
         ))}
       </ul>
