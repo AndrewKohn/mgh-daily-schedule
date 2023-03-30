@@ -49,9 +49,13 @@ const Footer = ({}) => {
         <a href="mailto: contact@kohnandrew.com">Andrew Kohn</a> ©{' '}
         <span>{currentYear}</span> · All rights reserved
       </p>
-      <p className="date">
-        Latest Edit: {lastDateEdit} 02:20:33 (Central Standard Time)
-      </p>
+      {lastDateEdit !== '0-0-0' ? (
+        <p className="date">
+          Latest Edit: {lastDateEdit} 02:20:33 (Central Standard Time)
+        </p>
+      ) : (
+        ''
+      )}
     </footer>
   );
 };
