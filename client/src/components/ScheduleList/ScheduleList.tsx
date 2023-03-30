@@ -9,12 +9,11 @@ import ScheduleItem from '../../store/ScheduleListModel';
 let idCount: number = 1;
 interface Props {
   dbScheduleItems: ScheduleItem[];
-  setDBScheduleItems: React.Dispatch<React.SetStateAction<ScheduleItem[]>>;
 }
 
-const ScheduleList = ({ dbScheduleItems, setDBScheduleItems }: Props) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+const ScheduleList = ({ dbScheduleItems }: Props) => {
   const adminContext = useContext(AdminContext);
+  const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
   const [scheduleItem, setScheduleItem] = useState<ScheduleItem | undefined>(
     undefined
   );
@@ -24,16 +23,10 @@ const ScheduleList = ({ dbScheduleItems, setDBScheduleItems }: Props) => {
   >([]);
 
   const sortByTime = () => {
-    return [...scheduleItems].sort((a, b) => a.activityTime - b.activityTime);
+    return [...scheduleItems].sort(
+      (first, second) => first.activityTime - second.activityTime
+    );
   };
-
-  useEffect(() => {
-    setSortedScheduleItems(sortByTime());
-  }, [scheduleItems]);
-
-  useEffect(() => {
-    console.log(sortedScheduleItems[2]);
-  }, [sortedScheduleItems]);
 
   // Set schedule from database
   useEffect(() => {
@@ -41,12 +34,16 @@ const ScheduleList = ({ dbScheduleItems, setDBScheduleItems }: Props) => {
       dbScheduleItems.map(dbScheduleItem => {
         while (idCount === dbScheduleItem.id) {
           idCount++;
-          console.log(idCount, dbScheduleItem.id);
         }
         setScheduleItems(prevState => [...prevState, dbScheduleItem]);
       });
     }
   }, [dbScheduleItems]);
+
+  // Sorts list by time
+  useEffect(() => {
+    setSortedScheduleItems(sortByTime());
+  }, [scheduleItems]);
 
   // Adds new schedule items
   useEffect(() => {
@@ -80,7 +77,7 @@ const ScheduleList = ({ dbScheduleItems, setDBScheduleItems }: Props) => {
   };
 
   const showFormHandler = (e: any) => {
-    setIsVisible(true);
+    setFormIsVisible(true);
   };
 
   return (
@@ -101,11 +98,11 @@ const ScheduleList = ({ dbScheduleItems, setDBScheduleItems }: Props) => {
           <BsFillPlusCircleFill className="add-icon" />
         </button>
       )}
-      {isVisible && (
+      {formIsVisible && (
         <ScheduleForm
           submitFormHandler={submitFormHandler}
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
+          isVisible={formIsVisible}
+          setIsVisible={setFormIsVisible}
         />
       )}
     </Fragment>

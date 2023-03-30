@@ -67,10 +67,7 @@ const DailySchedule = ({}) => {
   return (
     <Fragment>
       <Header title="Daily" />
-      <ScheduleList
-        dbScheduleItems={dbScheduleItems}
-        setDBScheduleItems={setDBScheduleItems}
-      />
+      <ScheduleList dbScheduleItems={dbScheduleItems} />
     </Fragment>
   );
 };

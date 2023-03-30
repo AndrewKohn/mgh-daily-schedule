@@ -35,7 +35,6 @@ const ScheduleForm = ({
     'James, Connor',
     'Rian, Anya',
   ];
-
   const [activityTime, setActivityTime] = useState<number>(0);
   const [patientName, setPatientName] = useState<string>(patientNames[0]);
   const [activityTitle, setActivityTitle] = useState<string>('');
@@ -58,28 +57,10 @@ const ScheduleForm = ({
     }
   };
 
-  // optionTimes.map((selectedTime: string, key: number) =>
-  //   console.log(selectedTime, key)
-  // );
-
-  // useEffect(() => {
-  //   console.log('time', time);
-  // }, [time]);
-
-  // const setActivityTimeHandler = (e: React.FormEvent<HTMLSelectElement>) => {
-  //   const target = e.target as HTMLSelectElement;
-  //   setActivityTime(Number(target.value));
-  // };
-
-  // const setPatientNameHandler = (e: React.FormEvent<HTMLSelectElement>) => {
-  //   const target = e.target as HTMLSelectElement;
-  //   setPatientName(target.value);
-  // };
-
   return (
     <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
       <form
-        onSubmit={e =>
+        onSubmit={e => {
           submitFormHandler(
             e,
             patientName,
@@ -87,8 +68,9 @@ const ScheduleForm = ({
             activityTitle,
             isImportant,
             activityNote
-          )
-        }
+          );
+          setIsVisible(false);
+        }}
         className="schedule-form"
       >
         <h2 className="form-title">New Activity</h2>
@@ -101,7 +83,6 @@ const ScheduleForm = ({
               id="time"
               name="time"
               className="form--input-select"
-              // value={activityTime}
               onChange={e => {
                 getMilitaryTime(e.target.value);
               }}
