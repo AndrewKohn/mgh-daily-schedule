@@ -9,19 +9,7 @@ interface Props {}
 const DailySchedule = ({}) => {
   const [dbData, setDBData] = useState<any>([]);
   const [dbScheduleItems, setDBScheduleItems] = useState<ScheduleItem[]>([]);
-  // FETCH
-  // useEffect(() => {
-  //   async function getData() {
-  //     const response = await fetch('http://localhost:3000/daily_schedule');
-  //     const data = await response.json();
 
-  //     console.log(data.dailySchedules[4]);
-  //   }
-
-  //   getData();
-  // }, []);
-
-  // AXIOS
   useEffect(() => {
     axios
       .get('http://localhost:3000/daily_schedule')

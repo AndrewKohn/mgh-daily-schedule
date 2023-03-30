@@ -18,13 +18,6 @@ const Login = ({}) => {
     setLoginIsValid(isUsernameValid && isPasswordValid);
   }, [username, password]);
 
-  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
-    e.preventDefault();
-
-    console.log(username, password);
-    adminContext.onLogIn(username, password);
-  };
-
   // Username
   const userInputChangeHandler = (userInput: string) => {
     if (userInput.length > 3) setUsername(userInput);
@@ -51,6 +44,12 @@ const Login = ({}) => {
     setUsername('');
     setPassword('');
     adminContext.onLogout();
+  };
+
+  const submitHandler = (e: React.FormEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    adminContext.onLogIn(username, password);
   };
 
   return (
