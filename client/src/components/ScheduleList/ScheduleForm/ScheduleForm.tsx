@@ -15,7 +15,7 @@ interface Props {
     patientName: string,
     activityTime: number,
     activityTitle: string,
-    isImportant: boolean,
+    isImportant: number,
     activityNote?: string
   ) => void;
   isVisible: boolean;
@@ -39,7 +39,7 @@ const ScheduleForm = ({
   const [patientName, setPatientName] = useState<string>(patientNames[0]);
   const [activityTitle, setActivityTitle] = useState<string>('');
   const [activityNote, setActivityNote] = useState<string>('');
-  const [isImportant, setIsImportant] = useState<boolean>(false);
+  const [isImportant, setIsImportant] = useState<number>(0);
 
   const getMilitaryTime = (selectedTime: string) => {
     const time = selectedTime.split('');
@@ -123,8 +123,8 @@ const ScheduleForm = ({
               id="activity-importance"
               className="important-checkbox"
               type="checkbox"
-              checked={isImportant}
-              onChange={e => setIsImportant(e.target.checked)}
+              checked={isImportant === 1 ? true : false}
+              onChange={e => setIsImportant(e.target.checked === true ? 1 : 0)}
             />
           </div>
         </div>

@@ -4,7 +4,7 @@ export default interface ScheduleListModel {
   activityTime: number;
   activityTitle: string;
   activityNote?: string;
-  isImportant: boolean;
+  isImportant: number;
   isComplete: boolean;
   isEdit: boolean;
 }
