@@ -5,8 +5,8 @@ import ScheduleForm from './ScheduleForm/ScheduleForm';
 import './ScheduleList.scss';
 import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
+import axios from 'axios';
 
-let idCount: number = 1;
 interface Props {
   dbScheduleItems: ScheduleItem[];
 }
@@ -21,6 +21,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
   const [sortedScheduleItems, setSortedScheduleItems] = useState<
     ScheduleItem[]
   >([]);
+  const [idCount, setIdCount] = useState<number>(1);
 
   const sortByTime = () => {
     return [...scheduleItems].sort(
@@ -33,7 +34,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     if (dbScheduleItems) {
       dbScheduleItems.map(dbScheduleItem => {
         while (idCount === dbScheduleItem.id) {
-          idCount++;
+          setIdCount(prevCount => prevCount++);
         }
         setScheduleItems(prevState => [...prevState, dbScheduleItem]);
       });
@@ -57,7 +58,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     patientName: string,
     activityTime: number,
     activityTitle: string,
-    isImportant: boolean,
+    isImportant: number,
     activityNote?: string
   ) => {
     e.preventDefault();
@@ -73,7 +74,20 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
       isEdit: false,
     });
 
-    idCount++;
+    try {
+      axios.post('http://localhost:3000/daily_schedule', {
+        id: idCount,
+        patientName: patientName,
+        activityTime: activityTime,
+        activityTitle: activityTitle,
+        activityNote: activityNote,
+        isImportant: isImportant,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    setIdCount(prevCount => prevCount++);
   };
 
   const showFormHandler = (e: any) => {
