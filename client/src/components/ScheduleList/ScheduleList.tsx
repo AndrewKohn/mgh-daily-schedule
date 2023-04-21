@@ -6,6 +6,7 @@ import './ScheduleList.scss';
 import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
 import axios from 'axios';
+import StaffShiftContext from '../../store/StaffShiftContext';
 
 interface Props {
   dbScheduleItems: ScheduleItem[];
@@ -13,6 +14,7 @@ interface Props {
 
 const ScheduleList = ({ dbScheduleItems }: Props) => {
   const adminContext = useContext(AdminContext);
+  const { isDayShift } = useContext(StaffShiftContext);
   const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
   const [scheduleItem, setScheduleItem] = useState<ScheduleItem | undefined>(
     undefined
@@ -24,27 +26,50 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
   const [idCount, setIdCount] = useState<number>(1);
 
   const sortByTime = () => {
-    return [...scheduleItems].sort(
+    const dayShiftStart = '7';
+    const nightShiftStart = '19';
+    const newArray = [...scheduleItems].sort(
       (first, second) => first.activityTime - second.activityTime
     );
+    let newArrayIndex = -1;
+
+    // Get the first index of the sorted array that begins with the startTime
+    for (let i = 0; i < newArray.length; i++) {
+      if (
+        newArray[i].activityTime
+          .toString()
+          .startsWith(isDayShift ? dayShiftStart : nightShiftStart)
+      ) {
+        newArrayIndex = i;
+        break;
+      }
+    }
+    console.log(newArrayIndex);
+
+    // Sort the schedule items by time
+    return newArray
+      .slice(newArrayIndex)
+      .concat(newArray.slice(0, newArrayIndex));
   };
 
   // Set schedule from database
   useEffect(() => {
     if (dbScheduleItems) {
-      dbScheduleItems.map(dbScheduleItem => {
-        while (idCount === dbScheduleItem.id) {
-          setIdCount(prevCount => prevCount++);
+      let maxId = 0;
+      dbScheduleItems.forEach(dbScheduleItem => {
+        if (dbScheduleItem.id > maxId) {
+          maxId = dbScheduleItem.id;
         }
-        setScheduleItems(prevState => [...prevState, dbScheduleItem]);
       });
+      setIdCount(maxId + 1);
+      setScheduleItems(dbScheduleItems);
     }
   }, [dbScheduleItems]);
 
   // Sorts list by time
   useEffect(() => {
     setSortedScheduleItems(sortByTime());
-  }, [scheduleItems]);
+  }, [scheduleItems, isDayShift]);
 
   // Adds new schedule items
   useEffect(() => {
@@ -104,7 +129,18 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
           <p>&nbsp;</p>
         </span>
         {sortedScheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
-          <ScheduleListItem scheduleItem={scheduleItem} key={key} />
+          <ScheduleListItem
+            scheduleItem={scheduleItem}
+            key={key}
+            // update after implementing patientHouse in db
+            highlightedShift={
+              isDayShift &&
+              scheduleItem.activityTime >= 7 &&
+              scheduleItem.activityTime < 19
+                ? 'highlight'
+                : ''
+            }
+          />
         ))}
       </ul>
       {adminContext.isLoggedIn && (
