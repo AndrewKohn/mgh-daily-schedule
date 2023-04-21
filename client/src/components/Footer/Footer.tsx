@@ -40,9 +40,6 @@ const Footer = ({}) => {
     return current;
   };
 
-  // use to gather date string
-  // console.log(lastEditDate);
-
   return (
     <footer className="footer">
       <p className="footer-text">
@@ -50,9 +47,7 @@ const Footer = ({}) => {
         <span>{currentYear}</span> · All rights reserved
       </p>
       {lastDateEdit !== '0-0-0' ? (
-        <p className="date">
-          Latest Edit: {lastDateEdit} 02:20:33 (Central Standard Time)
-        </p>
+        <p className="date">Latest Edit: {lastDateEdit}</p>
       ) : (
         ''
       )}
