@@ -45,6 +45,25 @@ class DailySchedule {
 
     return db.execute(sql);
   }
+
+  static updateById(
+    id: number,
+    patientName: string,
+    activityTime: number,
+    activityTitle: string,
+    activityNote: string,
+    isImportant: number
+  ) {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    let createdAtDate = `${year}-${month}-${day}`;
+    let sql = `UPDATE daily_schedule SET patient_name = '${patientName}', activity_time = '${activityTime}', activity_title = '${activityTitle}', activity_note = '${activityNote}', is_important = '${isImportant}', created_at = '${createdAtDate}' WHERE id = ${id};`;
+
+    return db.execute(sql);
+  }
 }
 
 module.exports = DailySchedule;

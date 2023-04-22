@@ -62,3 +62,35 @@ exports.getDailyScheduleById = async (
     next(error);
   }
 };
+
+exports.updateDailySchedule = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let dailyScheduleId = req.params.id;
+    let {
+      patientName,
+      activityTime,
+      activityTitle,
+      activityNote,
+      isImportant,
+    } = req.body;
+
+    // Update the daily schedule record in the database using the DailySchedule model
+    let [dailyScheduleItem, _] = await dailySchedule.updateById(
+      dailyScheduleId,
+      patientName,
+      activityTime,
+      activityTitle,
+      activityNote,
+      isImportant
+    );
+
+    res.status(200).json({ message: `id ${dailyScheduleId}: Updated!` });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};

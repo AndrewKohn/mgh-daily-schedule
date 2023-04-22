@@ -1,13 +1,17 @@
 const express = require('express');
-const DailyScheduleControllers = require('../controllers/DailyScheduleControllers');
+const {
+  getAllDailySchedules,
+  createNewDailySchedule,
+  getDailyScheduleById,
+  updateDailySchedule,
+} = require('../controllers/DailyScheduleControllers');
 const router = express.Router();
 
 // @route GET && POST - /daily_schedule/
-router
-  .route('/')
-  .get(DailyScheduleControllers.getAllDailySchedules)
-  .post(DailyScheduleControllers.createNewDailySchedule);
+router.route('/').get(getAllDailySchedules).post(createNewDailySchedule);
 
-router.route('/:id').get(DailyScheduleControllers.getDailyScheduleById);
+router.route('/:id').get(getDailyScheduleById);
+
+router.route('/:id').put(updateDailySchedule);
 
 module.exports = router;
