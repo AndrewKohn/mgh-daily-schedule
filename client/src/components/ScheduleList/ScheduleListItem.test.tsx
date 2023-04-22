@@ -11,7 +11,7 @@ describe('<ScheduleListItem />', () => {
     activityTitle: 'Medication Administration',
     activityNote:
       'Insulin instructions...  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut consequuntur odit nemo repudiandae. Deserunt numquam nulla qui error ipsum, quas maiores quasi asperiores odio labore aliquid unde facere at tenetur.',
-    isImportant: false,
+    isImportant: 0,
     isComplete: false,
     isEdit: false,
   };
@@ -45,7 +45,7 @@ describe('<ScheduleListItem />', () => {
         activityTime: 1,
         activityTitle: 'Some Activity',
         activityNote: '',
-        isImportant: true,
+        isImportant: 1,
         isComplete: false,
         isEdit: false,
       };
@@ -63,7 +63,7 @@ describe('<ScheduleListItem />', () => {
         activityTime: 1,
         activityTitle: 'Some Activity',
         activityNote: '',
-        isImportant: false,
+        isImportant: 0,
         isComplete: false,
         isEdit: false,
       };
@@ -83,7 +83,7 @@ describe('<ScheduleListItem />', () => {
         activityTime: 1,
         activityTitle: 'Some Activity',
         activityNote: '',
-        isImportant: false,
+        isImportant: 0,
         isComplete: false,
         isEdit: false,
       };
@@ -108,7 +108,7 @@ describe('<ScheduleListItem />', () => {
         activityTime: 1,
         activityTitle: 'Some Activity',
         activityNote: '',
-        isImportant: false,
+        isImportant: 0,
         isComplete: false,
         isEdit: false,
       };
