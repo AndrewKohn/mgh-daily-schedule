@@ -4,53 +4,47 @@ import Header from '../components/Header/Header';
 import ScheduleList from '../components/ScheduleList/ScheduleList';
 import ScheduleItem from '../store/ScheduleListModel';
 
-interface Props {}
-
 const DailySchedule = ({}) => {
   const [dbData, setDBData] = useState<any>([]);
   const [dbScheduleItems, setDBScheduleItems] = useState<ScheduleItem[]>([]);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/daily_schedule')
-      .then(res => setDBData(res.data.dailySchedules));
-    // try {
-    //   axios.post('http://localhost:3000/daily_schedule', {
-    //     patientName: 'string 3',
-    //     activityTime: 22,
-    //     activityTitle: 'my TItle',
-    //     activityNote: 'notey mcnoteface',
-    //     isImportant: 0,
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
-  }, []);
+    // Initial GET
+    axios.get('http://localhost:3000/daily_schedule').then(res => {
+      const newDbData = res.data.dailySchedules;
+      if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
+        setDBData(newDbData);
+      }
+    });
 
-  useEffect(() => {
-    if (dbData) {
-      dbData.map((data: any) => {
-        setDBScheduleItems(prevState => [
-          ...prevState,
-          {
-            id: data.id,
-            patientName: data.patient_name,
-            activityTime: data.activity_time,
-            activityTitle: data.activity_title,
-            activityNote: data.activity_note,
-            isImportant: data.is_important,
-            isComplete: false,
-            isEdit: false,
-          },
-        ]);
+    // Set state if there are changes
+    const intervalDBGet = setInterval(() => {
+      axios.get('http://localhost:3000/daily_schedule').then(res => {
+        const newDbData = res.data.dailySchedules;
+        if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
+          setDBData(newDbData);
+        }
       });
-    }
+    }, 1000);
+
+    return () => clearInterval(intervalDBGet);
   }, [dbData]);
 
   useEffect(() => {
-    console.log(`item data:  COUNT = ${dbScheduleItems.length}`);
-    dbScheduleItems.map(data => console.log(data));
-  }, [dbScheduleItems]);
+    if (dbData.length > 0) {
+      const newDbScheduleItems = dbData.map((data: any) => ({
+        id: data.id,
+        patientName: data.patient_name,
+        activityTime: data.activity_time,
+        activityTitle: data.activity_title,
+        activityNote: data.activity_note,
+        isImportant: data.is_important,
+        isComplete: false,
+        isEdit: false,
+      }));
+      setDBScheduleItems([...newDbScheduleItems]);
+    }
+  }, [dbData]);
 
   return (
     <Fragment>
