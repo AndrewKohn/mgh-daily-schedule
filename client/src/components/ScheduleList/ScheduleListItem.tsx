@@ -1,16 +1,36 @@
-import { useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useState } from 'react';
 import { BsFillExclamationCircleFill, BsPencilSquare } from 'react-icons/bs';
 import './ScheduleListItem.scss';
 import ScheduleItem from '../../store/ScheduleListModel';
 import AdminContext from '../../store/AdminContext';
 import optionTimes from '../../store/OptionTimes';
+import ScheduleForm from './ScheduleForm/ScheduleForm';
 
 interface Props {
   scheduleItem: ScheduleItem;
+  submitFormHandler: (
+    e: React.FormEvent<HTMLFormElement>,
+    patientName: string,
+    activityTime: number,
+    activityTitle: string,
+    isImportant: number,
+    activityNote?: string,
+    id?: number
+  ) => Promise<void>;
+  highlightedShift?: string;
 }
 
-const ScheduleListItem = ({ scheduleItem }: Props) => {
+const ScheduleListItem = ({
+  scheduleItem,
+  submitFormHandler,
+  highlightedShift,
+}: Props) => {
   const adminContext = useContext(AdminContext);
+  const [editScheduleItem, setEditScheduleItem] = useState<boolean>(false);
+
+  const editButtonHandler = () => {
+    setEditScheduleItem(true);
+  };
 
   const activityImportance = () => {
     return scheduleItem?.isImportant ? (
@@ -24,7 +44,7 @@ const ScheduleListItem = ({ scheduleItem }: Props) => {
 
   const activityAction = () => {
     return adminContext.isLoggedIn ? (
-      <button className="edit-button">
+      <button className="edit-button" onClick={editButtonHandler}>
         <div className="edit-icon">
           <BsPencilSquare />
         </div>
@@ -39,23 +59,33 @@ const ScheduleListItem = ({ scheduleItem }: Props) => {
   };
 
   return (
-    <li className="schedule-list-item">
-      <span className="schedule-list-item-information">
-        <p data-testid="required-time">
-          {optionTimes[scheduleItem?.activityTime]}
-        </p>
-        <p data-testid="required-name">{scheduleItem?.patientName}</p>
-        <details className="activity-container">
-          <summary data-testid="required-activity" className="activity-title">
-            {activityImportance()}
+    <Fragment>
+      <li className={`schedule-list-item ${highlightedShift}`}>
+        <span className="schedule-list-item-information">
+          <p data-testid="required-time">
+            {optionTimes[scheduleItem?.activityTime]}
+          </p>
+          <p data-testid="required-name">{scheduleItem?.patientName}</p>
+          <details className="activity-container">
+            <summary data-testid="required-activity" className="activity-title">
+              {activityImportance()}
 
-            {scheduleItem?.activityTitle}
-          </summary>
-          <p className="activity-details">{scheduleItem?.activityNote}</p>
-        </details>
-        <span className="action-container">{activityAction()}</span>
-      </span>
-    </li>
+              {scheduleItem?.activityTitle}
+            </summary>
+            <p className="activity-details">{scheduleItem?.activityNote}</p>
+          </details>
+          <span className="action-container">{activityAction()}</span>
+        </span>
+      </li>
+      {editScheduleItem && (
+        <ScheduleForm
+          submitFormHandler={submitFormHandler}
+          isVisible={editScheduleItem}
+          setIsVisible={setEditScheduleItem}
+          scheduleItem={scheduleItem}
+        />
+      )}
+    </Fragment>
   );
 };
 
