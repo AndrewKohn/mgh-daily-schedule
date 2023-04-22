@@ -44,7 +44,6 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
         break;
       }
     }
-    console.log(newArrayIndex);
 
     // Sort the schedule items by time
     return newArray
@@ -78,7 +77,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     }
   }, [scheduleItem]);
 
-  const submitFormHandler = (
+  const submitFormPostHandler = (
     e: React.FormEvent<HTMLFormElement>,
     patientName: string,
     activityTime: number,
@@ -115,6 +114,30 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     setIdCount(prevCount => prevCount++);
   };
 
+  const submitFormPutHandler = async (
+    e: React.FormEvent<HTMLFormElement>,
+    patientName: string,
+    activityTime: number,
+    activityTitle: string,
+    isImportant: number,
+    activityNote?: string,
+    id?: number
+  ) => {
+    e.preventDefault();
+
+    try {
+      await axios.put(`http://localhost:3000/daily_schedule/${id}`, {
+        patientName: patientName,
+        activityTime: activityTime,
+        activityTitle: activityTitle,
+        activityNote: activityNote,
+        isImportant: isImportant,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const showFormHandler = (e: any) => {
     setFormIsVisible(true);
   };
@@ -131,6 +154,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
         {sortedScheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
           <ScheduleListItem
             scheduleItem={scheduleItem}
+            submitFormHandler={submitFormPutHandler}
             key={key}
             // update after implementing patientHouse in db
             highlightedShift={
@@ -150,7 +174,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
       )}
       {formIsVisible && (
         <ScheduleForm
-          submitFormHandler={submitFormHandler}
+          submitFormHandler={submitFormPostHandler}
           isVisible={formIsVisible}
           setIsVisible={setFormIsVisible}
         />

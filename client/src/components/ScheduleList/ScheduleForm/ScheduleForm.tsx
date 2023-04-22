@@ -1,13 +1,9 @@
 import { useEffect, useState } from 'react';
-import { FcCheckmark } from 'react-icons/fc';
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 import Modal from '../../UI/Modal/Modal';
 import './ScheduleForm.scss';
 import optionTimes from '../../../store/OptionTimes';
-
-// [TODO]
-// Tests:
-// getMilitaryTime(), Add/remove patient functions, form submission
+import ScheduleItem from '../../../store/ScheduleListModel';
 
 interface Props {
   submitFormHandler: (
@@ -16,16 +12,19 @@ interface Props {
     activityTime: number,
     activityTitle: string,
     isImportant: number,
-    activityNote?: string
+    activityNote?: string,
+    id?: number
   ) => void;
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
+  scheduleItem?: ScheduleItem;
 }
 
 const ScheduleForm = ({
   submitFormHandler,
   isVisible,
   setIsVisible,
+  scheduleItem,
 }: Props) => {
   let patientNames = [
     'Adams, Dorothy',
@@ -38,8 +37,22 @@ const ScheduleForm = ({
   const [activityTime, setActivityTime] = useState<number>(0);
   const [patientName, setPatientName] = useState<string>(patientNames[0]);
   const [activityTitle, setActivityTitle] = useState<string>('');
-  const [activityNote, setActivityNote] = useState<string>('');
+  const [activityNote, setActivityNote] = useState<string | undefined>('');
   const [isImportant, setIsImportant] = useState<number>(0);
+  const [id, setId] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    console.log(scheduleItem?.activityTime);
+
+    if (scheduleItem) {
+      setId(scheduleItem.id);
+      setActivityTime(scheduleItem.activityTime);
+      setPatientName(scheduleItem.patientName);
+      setActivityTitle(scheduleItem.activityTitle);
+      setActivityNote(scheduleItem.activityNote);
+      setIsImportant(scheduleItem.isImportant);
+    }
+  }, []);
 
   const getMilitaryTime = (selectedTime: string) => {
     const time = selectedTime.split('');
@@ -57,18 +70,34 @@ const ScheduleForm = ({
     }
   };
 
+  const getActivityTimeEdit = (time: number) => {
+    if (time === 0) return '12AM';
+    if (time < 12) return time + 'AM';
+    if (time >= 12) return time - 12 + 'PM';
+  };
+
   return (
     <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
       <form
         onSubmit={e => {
-          submitFormHandler(
-            e,
-            patientName,
-            activityTime,
-            activityTitle,
-            isImportant,
-            activityNote
-          );
+          scheduleItem
+            ? submitFormHandler(
+                e,
+                patientName,
+                activityTime,
+                activityTitle,
+                isImportant,
+                activityNote,
+                id
+              )
+            : submitFormHandler(
+                e,
+                patientName,
+                activityTime,
+                activityTitle,
+                isImportant,
+                activityNote
+              );
           setIsVisible(false);
         }}
         className="schedule-form"
@@ -86,6 +115,7 @@ const ScheduleForm = ({
               onChange={e => {
                 getMilitaryTime(e.target.value);
               }}
+              value={scheduleItem ? getActivityTimeEdit(activityTime) : '12AM'}
               autoFocus
               required
             >
@@ -102,7 +132,7 @@ const ScheduleForm = ({
               id="patient"
               name="patient"
               className="form--input-select"
-              value={patientName}
+              value={scheduleItem ? patientName : ''}
               onChange={e => setPatientName(e.target.value)}
               required
             >
@@ -124,6 +154,7 @@ const ScheduleForm = ({
               className="important-checkbox"
               type="checkbox"
               checked={isImportant === 1 ? true : false}
+              value={scheduleItem ? isImportant : ''}
               onChange={e => setIsImportant(e.target.checked === true ? 1 : 0)}
             />
           </div>
