@@ -34,7 +34,6 @@
     .activity-container {
       width: 75%;
       min-width: 20rem;
-
       .activity-title {
         @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
         cursor: pointer;
@@ -51,26 +50,31 @@
           transform: translateX(-50%);
           content: '►';
         }
+      }
 
-        .important {
-          @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
-          position: relative;
-          margin-right: 1.2rem;
-          color: $button;
-          z-index: 1;
+      .activity-title--without-note {
+        @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
+        margin-left: 1.2rem;
+      }
 
-          &::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 90%;
-            height: 90%;
-            background-color: $background;
-            border-radius: 50%;
-            z-index: -1;
-          }
+      .important {
+        @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
+        position: relative;
+        margin-right: 1.2rem;
+        color: $button;
+        z-index: 1;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          height: 90%;
+          background-color: $background;
+          border-radius: 50%;
+          z-index: -1;
         }
       }
 
