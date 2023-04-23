@@ -88,7 +88,10 @@ exports.updateDailySchedule = async (
       isImportant
     );
 
-    res.status(200).json({ message: `id ${dailyScheduleId}: Updated!` });
+    res.status(200).json({
+      message: `Post ${dailyScheduleId}: Updated!`,
+      post: dailyScheduleItem[0],
+    });
   } catch (error) {
     console.log(error);
     next(error);
