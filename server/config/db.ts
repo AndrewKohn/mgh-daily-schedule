@@ -10,10 +10,4 @@ const pool = mysql.createPool({
 
 let sql = 'SELECT * FROM daily_schedule';
 
-// pool.execute(sql, function (err: any, results: any) {
-//   if (err) throw err;
-
-//   results.forEach((result: any) => console.log(result.id, result.patient_name));
-// });
-
 module.exports = pool.promise();

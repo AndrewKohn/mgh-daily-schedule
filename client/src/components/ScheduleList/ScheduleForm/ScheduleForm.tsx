@@ -42,8 +42,6 @@ const ScheduleForm = ({
   const [id, setId] = useState<number | undefined>(undefined);
 
   useEffect(() => {
-    console.log(scheduleItem?.activityTime);
-
     if (scheduleItem) {
       setId(scheduleItem.id);
       setActivityTime(scheduleItem.activityTime);

@@ -7,7 +7,7 @@ const {
 } = require('../controllers/DailyScheduleControllers');
 const router = express.Router();
 
-// @route GET && POST - /daily_schedule/
+// @route - /daily_schedule/
 router.route('/').get(getAllDailySchedules).post(createNewDailySchedule);
 
 router.route('/:id').get(getDailyScheduleById);
