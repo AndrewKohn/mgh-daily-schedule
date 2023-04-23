@@ -66,14 +66,32 @@ const ScheduleListItem = ({
             {optionTimes[scheduleItem?.activityTime]}
           </p>
           <p data-testid="required-name">{scheduleItem?.patientName}</p>
-          <details className="activity-container">
-            <summary data-testid="required-activity" className="activity-title">
-              {activityImportance()}
+          {scheduleItem.activityNote !== undefined &&
+          scheduleItem.activityNote.length > 0 ? (
+            <details className="activity-container">
+              <summary
+                data-testid="required-activity"
+                className="activity-title"
+              >
+                {activityImportance()}
 
-              {scheduleItem?.activityTitle}
-            </summary>
-            <p className="activity-details">{scheduleItem?.activityNote}</p>
-          </details>
+                {scheduleItem?.activityTitle}
+              </summary>
+              <p className="activity-details">{scheduleItem?.activityNote}</p>
+            </details>
+          ) : (
+            <div className="activity-container">
+              <span
+                data-testid="required-activity"
+                className="activity-title--without-note"
+              >
+                {activityImportance()}
+
+                {scheduleItem?.activityTitle}
+              </span>
+            </div>
+          )}
+
           <span className="action-container">{activityAction()}</span>
         </span>
       </li>
