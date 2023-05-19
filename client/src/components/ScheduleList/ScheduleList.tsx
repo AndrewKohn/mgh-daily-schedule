@@ -51,6 +51,21 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
       .concat(newArray.slice(0, newArrayIndex));
   };
 
+  const highlightShiftTimes = (scheduleItem: ScheduleItem) => {
+    if (
+      isDayShift &&
+      scheduleItem.activityTime >= 7 &&
+      scheduleItem.activityTime < 19
+    )
+      return 'highlight';
+
+    if (
+      (!isDayShift && scheduleItem.activityTime < 7) ||
+      (!isDayShift && scheduleItem.activityTime >= 19)
+    )
+      return 'highlight';
+  };
+
   // Set schedule from database
   useEffect(() => {
     if (dbScheduleItems) {
@@ -157,13 +172,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
             submitFormHandler={submitFormPutHandler}
             key={key}
             // update after implementing patientHouse in db
-            highlightedShift={
-              isDayShift &&
-              scheduleItem.activityTime >= 7 &&
-              scheduleItem.activityTime < 19
-                ? 'highlight'
-                : ''
-            }
+            highlightedShift={highlightShiftTimes(scheduleItem)}
           />
         ))}
       </ul>
