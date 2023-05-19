@@ -30,6 +30,7 @@ const DailySchedule = ({}) => {
     return () => clearInterval(intervalDBGet);
   }, [dbData]);
 
+  // Display data if present & updates upon changes
   useEffect(() => {
     if (dbData.length > 0) {
       const newDbScheduleItems = dbData.map((data: any) => ({
