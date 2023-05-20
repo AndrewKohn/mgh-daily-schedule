@@ -42,7 +42,6 @@ class DailySchedule {
 
   static findById(id: number) {
     let sql = `SELECT * FROM daily_schedule WHERE id = ${id};`;
-
     return db.execute(sql);
   }
 

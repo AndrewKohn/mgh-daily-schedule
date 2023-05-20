@@ -8,6 +8,4 @@ const pool = mysql.createPool({
   password: process.env.DB_PASSWORD,
 });
 
-let sql = 'SELECT * FROM daily_schedule';
-
 module.exports = pool.promise();
