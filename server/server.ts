@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/daily_schedule', require('./routes/DailyScheduleRoutes'));
+app.use('/patients', require('./routes/PatientsRoutes'));
 
 // Global error handler
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
@@ -17,6 +18,9 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 
   res.status(500).json({
     message: 'Server error!  Something went wrong...',
+    stack: `${err.stack}`,
+    name: `${err.name}`,
+    code: `${err.code}`,
   });
 });
 
