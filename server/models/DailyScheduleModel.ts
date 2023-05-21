@@ -63,6 +63,11 @@ class DailySchedule {
 
     return db.execute(sql);
   }
+
+  static delete(id: number) {
+    let sql = `DELETE FROM daily_schedule WHERE id in (${id});`;
+    return db.execute(sql);
+  }
 }
 
 module.exports = DailySchedule;

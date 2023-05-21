@@ -97,3 +97,25 @@ exports.updateDailySchedule = async (
     next(error);
   }
 };
+
+exports.deleteDailyScheduleById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let dailyScheduleId = req.params.id;
+    let [dailyScheduleItem, _] = await dailySchedule.delete(dailyScheduleId);
+
+    res.status(200).json({
+      message: 'Schedule item deleted!',
+      deletedItem: dailyScheduleItem[0],
+    });
+  } catch (error) {
+    let dailyScheduleId = req.params.id;
+
+    console.log(error);
+    console.log('error with deleting row', dailyScheduleId);
+    next(error);
+  }
+};

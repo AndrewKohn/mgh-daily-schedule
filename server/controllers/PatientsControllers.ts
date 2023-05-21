@@ -73,3 +73,25 @@ exports.updatePatient = async (
     next(error);
   }
 };
+
+exports.deletePatientById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    let patientId = req.params.id;
+    let [patients, _] = await Patients.delete(patientId);
+
+    res.status(200).json({
+      message: 'Patient data deleted!',
+      deletedItem: patients[0],
+    });
+  } catch (error) {
+    let patientId = req.params.id;
+
+    console.log(error);
+    console.log('error with deleting row', patientId);
+    next(error);
+  }
+};

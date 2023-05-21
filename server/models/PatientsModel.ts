@@ -34,6 +34,11 @@ class Patients {
     let sql = `UPDATE patients SET patient_name = '${patientName}', patient_residence = '${patientResidence}', is_active = '${isActive}' WHERE id = ${id};`;
     return patientsDB.execute(sql);
   }
+
+  static delete(id: number) {
+    let sql = `DELETE FROM patients WHERE id in (${id});`;
+    return patientsDB.execute(sql);
+  }
 }
 
 module.exports = Patients;
