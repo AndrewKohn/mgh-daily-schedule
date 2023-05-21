@@ -113,7 +113,7 @@ const ScheduleForm = ({
               onChange={e => {
                 getMilitaryTime(e.target.value);
               }}
-              value={scheduleItem ? getActivityTimeEdit(activityTime) : '12AM'}
+              value={getActivityTimeEdit(activityTime)}
               autoFocus
               required
             >
