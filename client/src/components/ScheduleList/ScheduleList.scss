@@ -7,6 +7,7 @@
   min-width: 40rem;
   list-style: none;
   background-color: $border;
+  margin-bottom: 16rem;
 
   .list-headings {
     @include mixins.DisplayFlex(center, center, row, nowrap);
@@ -49,8 +50,11 @@
 .add-icon-container {
   margin-top: 2rem;
   background: none;
+  height: 3.2rem;
+  width: 3.2rem;
   border: none;
   cursor: pointer;
+  transform: translateY(-14rem);
 
   .add-icon {
     height: 3.2rem;
