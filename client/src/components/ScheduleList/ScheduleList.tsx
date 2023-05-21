@@ -154,6 +154,11 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
   };
 
   const showFormHandler = (e: any) => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
     setFormIsVisible(true);
   };
 
