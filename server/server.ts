@@ -7,7 +7,8 @@ const cors = require('cors');
 app.use(express.json());
 app.use(cors());
 
-app.use('/daily_schedule', require('./routes/DailyScheduleRoutes'));
+app.use('/clearview', require('./routes/ClearviewScheduleRoutes'));
+app.use('/williston', require('./routes/WillistonScheduleRoutes'));
 app.use('/patients', require('./routes/PatientsRoutes'));
 
 // Global error handler
