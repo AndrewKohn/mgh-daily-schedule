@@ -1,19 +1,19 @@
-const clearviewExpress = require('express');
-const clearviewRouter = clearviewExpress.Router();
+const willistonExpress = require('express');
+const willistonRouter = willistonExpress.Router();
 const {
-  getAllClearviewSchedule,
-  createNewClearviewSchedule,
-  getClearviewScheduleById,
-  updateClearviewSchedule,
-  deleteClearviewScheduleById,
-} = require('../controllers/ClearviewScheduleController');
+  getAllWillistonSchedule,
+  createNewWillistonSchedule,
+  getWillistonScheduleById,
+  updateWillistonSchedule,
+  deleteWillistonScheduleById,
+} = require('../controllers/WillistonScheduleControllers');
 
-clearviewRouter
+willistonRouter
   .route('/')
-  .get(getAllClearviewSchedule)
-  .post(createNewClearviewSchedule);
-clearviewRouter.route('/:id').get(getClearviewScheduleById);
-clearviewRouter.route('/:id').put(updateClearviewSchedule);
-clearviewRouter.route('/:id').delete(deleteClearviewScheduleById);
+  .get(getAllWillistonSchedule)
+  .post(createNewWillistonSchedule);
+willistonRouter.route('/:id').get(getWillistonScheduleById);
+willistonRouter.route('/:id').put(updateWillistonSchedule);
+willistonRouter.route('/:id').delete(deleteWillistonScheduleById);
 
-module.exports = clearviewRouter;
+module.exports = willistonRouter;
