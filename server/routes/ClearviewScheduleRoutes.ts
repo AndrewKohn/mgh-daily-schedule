@@ -6,7 +6,7 @@ const {
   getClearviewScheduleById,
   updateClearviewSchedule,
   deleteClearviewScheduleById,
-} = require('../controllers/ClearviewScheduleController');
+} = require('../controllers/ClearviewScheduleControllers');
 
 clearviewRouter
   .route('/')
