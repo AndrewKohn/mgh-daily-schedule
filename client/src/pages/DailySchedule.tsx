@@ -17,8 +17,16 @@ const DailySchedule = ({}) => {
   const [dbScheduleItems, setDBScheduleItems] = useState<ScheduleItem[]>([]);
   const [clearviewDB, setClearviewDB] = useState<ScheduleItem[]>([]);
   const [willistonDB, setWillistonDB] = useState<ScheduleItem[]>([]);
+  const [patientsDB, setPatientsDB] = useState<Patient[]>([]);
+  const [clearviewSchedule, setClearviewSchedule] = useState<ScheduleItem[]>(
+    []
+  );
+  const [willistonSchedule, setWillistonSchedule] = useState<ScheduleItem[]>(
+    []
+  );
   const [patients, setPatients] = useState<Patient[]>([]);
 
+  // [TODO] : Add more configs for public test account
   const clearviewConfig: DBConfig = {
     path: '/clearview',
     target: 'clearviewDailySchedule',
@@ -36,29 +44,69 @@ const DailySchedule = ({}) => {
 
   useEffect(() => {
     // [TODO] : Maybe this might need setInterval to render update information
-    getDBData(patientsConfig, patients, setPatients);
-
-    staffShiftContext.isClearViewHouse
-      ? getDBData(clearviewConfig, clearviewDB, setClearviewDB)
-      : getDBData(willistonConfig, willistonDB, setWillistonDB);
-  }, [staffShiftContext.isClearViewHouse, patients]);
+    getDBData<Patient[]>(patientsConfig, patientsDB, setPatientsDB);
+    getDBData<ScheduleItem[]>(clearviewConfig, clearviewDB, setClearviewDB);
+    getDBData<ScheduleItem[]>(willistonConfig, willistonDB, setWillistonDB);
+  }, [staffShiftContext.isClearViewHouse]);
 
   useEffect(() => {
-    console.log('patients:', patients);
-    console.log('cv:', clearviewDB);
-    console.log('wl:', willistonDB);
-  }, [patients, clearviewDB, willistonDB]);
+    if (patientsDB.length > 0 && patients !== patientsDB)
+      setPatients(transformDBData('Patient', patientsDB));
+    if (clearviewDB.length > 0 && clearviewSchedule !== clearviewDB) {
+      setClearviewSchedule(transformDBData('ScheduleItem', clearviewDB));
+    }
+    if (willistonDB.length > 0 && willistonSchedule !== willistonDB) {
+      setWillistonSchedule(transformDBData('ScheduleItem', willistonDB));
+    }
+  }, [patientsDB, clearviewDB, willistonDB]);
 
-  const getDBData = (
+  useEffect(() => {
+    console.log(patients);
+    console.log(clearviewSchedule);
+    console.log(willistonSchedule);
+  }, [patients, clearviewSchedule, willistonSchedule]);
+
+  const getDBData = <T extends any>(
     config: DBConfig,
-    state: any,
-    setState: React.Dispatch<React.SetStateAction<any>>
+    state: T,
+    setState: React.Dispatch<React.SetStateAction<T>>
   ) => {
     const { path, target } = config;
-    axios.get('http://localhost:3000' + path).then(res => {
-      if (JSON.stringify(state) !== JSON.stringify(res.data[target]))
-        setState(res.data[target]);
-    });
+    axios
+      .get('http://localhost:3000' + path)
+      .then(res => {
+        if (JSON.stringify(state) !== JSON.stringify(res.data[target])) {
+          setState(res.data[target]);
+        }
+      })
+      .catch(error => console.error('GET error:', error));
+  };
+
+  const transformDBData = (inputType: string, state: any) => {
+    if (inputType === 'Patient') {
+      const patientsMap = state.map((patient: any) => ({
+        id: patient.id,
+        patientName: patient.patient_name,
+        patientResidence: patient.residence,
+        isActive: patient.is_active,
+      }));
+      return patientsMap;
+    }
+    if (inputType === 'ScheduleItem') {
+      const scheduleItemsMap = state.map((scheduleItem: any) => ({
+        id: scheduleItem.id,
+        patientName: scheduleItem.patient_name,
+        activityTime: scheduleItem.activity_time,
+        activityTitle: scheduleItem.activity_title,
+        activityNote: scheduleItem.activity_note,
+        isImportant: scheduleItem.is_important,
+        isComplete: false,
+        isEdit: false,
+      }));
+      return scheduleItemsMap;
+    }
+
+    return [];
   };
 
   ///////////////////////////////////////////////////////////////
@@ -107,7 +155,13 @@ const DailySchedule = ({}) => {
   return (
     <Fragment>
       <Header title="Daily" />
-      <ScheduleList dbScheduleItems={dbScheduleItems} />
+      <ScheduleList
+        dbScheduleItems={
+          staffShiftContext.isClearViewHouse
+            ? clearviewSchedule
+            : willistonSchedule
+        }
+      />
     </Fragment>
   );
 };
