@@ -44,9 +44,19 @@ const DailySchedule = ({}) => {
 
   useEffect(() => {
     // [TODO] : Maybe this might need setInterval to render update information
+    // initial GET
     getDBData<Patient[]>(patientsConfig, patientsDB, setPatientsDB);
     getDBData<ScheduleItem[]>(clearviewConfig, clearviewDB, setClearviewDB);
     getDBData<ScheduleItem[]>(willistonConfig, willistonDB, setWillistonDB);
+
+    // Set state if there are changes
+    const intervalDBGet = setInterval(() => {
+      getDBData<Patient[]>(patientsConfig, patientsDB, setPatientsDB);
+      getDBData<ScheduleItem[]>(clearviewConfig, clearviewDB, setClearviewDB);
+      getDBData<ScheduleItem[]>(willistonConfig, willistonDB, setWillistonDB);
+    }, 1000);
+
+    return () => clearInterval(intervalDBGet);
   }, [staffShiftContext.isClearViewHouse]);
 
   useEffect(() => {
@@ -59,12 +69,6 @@ const DailySchedule = ({}) => {
       setWillistonSchedule(transformDBData('ScheduleItem', willistonDB));
     }
   }, [patientsDB, clearviewDB, willistonDB]);
-
-  useEffect(() => {
-    console.log(patients);
-    console.log(clearviewSchedule);
-    console.log(willistonSchedule);
-  }, [patients, clearviewSchedule, willistonSchedule]);
 
   const getDBData = <T extends any>(
     config: DBConfig,
@@ -111,44 +115,44 @@ const DailySchedule = ({}) => {
 
   ///////////////////////////////////////////////////////////////
 
-  useEffect(() => {
-    // Initial GET
-    axios.get('http://localhost:3000/daily_schedule').then(res => {
-      const newDbData = res.data.dailySchedules;
-      if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
-        setDBData(newDbData);
-      }
-    });
+  // useEffect(() => {
+  //   // Initial GET
+  //   axios.get('http://localhost:3000/daily_schedule').then(res => {
+  //     const newDbData = res.data.dailySchedules;
+  //     if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
+  //       setDBData(newDbData);
+  //     }
+  //   });
 
-    // Set state if there are changes
-    const intervalDBGet = setInterval(() => {
-      axios.get('http://localhost:3000/daily_schedule').then(res => {
-        const newDbData = res.data.dailySchedules;
-        if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
-          setDBData(newDbData);
-        }
-      });
-    }, 1000);
+  //   // Set state if there are changes
+  //   const intervalDBGet = setInterval(() => {
+  //     axios.get('http://localhost:3000/daily_schedule').then(res => {
+  //       const newDbData = res.data.dailySchedules;
+  //       if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
+  //         setDBData(newDbData);
+  //       }
+  //     });
+  //   }, 1000);
 
-    return () => clearInterval(intervalDBGet);
-  }, [dbData]);
+  //   return () => clearInterval(intervalDBGet);
+  // }, [dbData]);
 
-  // Display data if present & updates upon changes
-  useEffect(() => {
-    if (dbData.length > 0) {
-      const newDbScheduleItems = dbData.map((data: any) => ({
-        id: data.id,
-        patientName: data.patient_name,
-        activityTime: data.activity_time,
-        activityTitle: data.activity_title,
-        activityNote: data.activity_note,
-        isImportant: data.is_important,
-        isComplete: false,
-        isEdit: false,
-      }));
-      setDBScheduleItems([...newDbScheduleItems]);
-    }
-  }, [dbData]);
+  // // Display data if present & updates upon changes
+  // useEffect(() => {
+  //   if (dbData.length > 0) {
+  //     const newDbScheduleItems = dbData.map((data: any) => ({
+  //       id: data.id,
+  //       patientName: data.patient_name,
+  //       activityTime: data.activity_time,
+  //       activityTitle: data.activity_title,
+  //       activityNote: data.activity_note,
+  //       isImportant: data.is_important,
+  //       isComplete: false,
+  //       isEdit: false,
+  //     }));
+  //     setDBScheduleItems([...newDbScheduleItems]);
+  //   }
+  // }, [dbData]);
 
   //////////////////////////////////////////////////////
 
@@ -156,11 +160,17 @@ const DailySchedule = ({}) => {
     <Fragment>
       <Header title="Daily" />
       <ScheduleList
-        dbScheduleItems={
+        scheduleItemsData={
           staffShiftContext.isClearViewHouse
             ? clearviewSchedule
             : willistonSchedule
         }
+        DBPath={
+          staffShiftContext.isClearViewHouse
+            ? clearviewConfig.path
+            : willistonConfig.path
+        }
+        patientsData={patients}
       />
     </Fragment>
   );
