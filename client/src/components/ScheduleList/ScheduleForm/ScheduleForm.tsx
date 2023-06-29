@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 import Modal from '../../UI/Modal/Modal';
 import './ScheduleForm.scss';
 import optionTimes from '../../../store/OptionTimes';
 import ScheduleItem from '../../../store/ScheduleListModel';
+import Patient from '../../../store/PatientModel';
+import StaffShiftContext from '../../../store/StaffShiftContext';
 
 interface Props {
   submitFormHandler: (
@@ -18,6 +20,7 @@ interface Props {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   scheduleItem?: ScheduleItem;
+  patientsData: Patient[];
 }
 
 const ScheduleForm = ({
@@ -25,8 +28,9 @@ const ScheduleForm = ({
   isVisible,
   setIsVisible,
   scheduleItem,
+  patientsData,
 }: Props) => {
-  let patientNames = [
+  let names = [
     'Adams, Dorothy',
     'Butter, Peanut',
     'Wills, Rean',
@@ -34,6 +38,20 @@ const ScheduleForm = ({
     'James, Connor',
     'Rian, Anya',
   ];
+
+  const staffShiftContext = useContext(StaffShiftContext);
+  let patientNames = patientsData
+    .map((patient: Patient) => {
+      if (staffShiftContext.isClearViewHouse) {
+        if (patient.patientResidence === 'clearview' && patient.isActive)
+          return patient.patientName;
+      }
+      if (!staffShiftContext.isClearViewHouse) {
+        if (patient.patientResidence === 'williston' && patient.isActive)
+          return patient.patientName;
+      }
+    })
+    .filter((name): name is string => name !== undefined);
   const [activityTime, setActivityTime] = useState<number>(0);
   const [patientName, setPatientName] = useState<string>(patientNames[0]);
   const [activityTitle, setActivityTitle] = useState<string>('');
@@ -130,7 +148,7 @@ const ScheduleForm = ({
               id="patient"
               name="patient"
               className="form--input-select"
-              value={scheduleItem ? patientName : ''}
+              value={patientName}
               onChange={e => setPatientName(e.target.value)}
               required
             >
