@@ -7,12 +7,15 @@ import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
 import axios from 'axios';
 import StaffShiftContext from '../../store/StaffShiftContext';
+import Patient from '../../store/PatientModel';
 
 interface Props {
-  dbScheduleItems: ScheduleItem[];
+  scheduleItemsData: ScheduleItem[];
+  DBPath: string;
+  patientsData: Patient[];
 }
 
-const ScheduleList = ({ dbScheduleItems }: Props) => {
+const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
   const adminContext = useContext(AdminContext);
   const { isDayShift } = useContext(StaffShiftContext);
   const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
@@ -25,6 +28,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
   >([]);
   const [idCount, setIdCount] = useState<number>(1);
 
+  // [FIXME] : sortByTime not sorting correctly, but highlighting works...
   const sortByTime = () => {
     const dayShiftStart = '7';
     const nightShiftStart = '19';
@@ -68,17 +72,17 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
 
   // Set schedule from database
   useEffect(() => {
-    if (dbScheduleItems) {
+    if (scheduleItemsData) {
       let maxId = 0;
-      dbScheduleItems.forEach(dbScheduleItem => {
-        if (dbScheduleItem.id > maxId) {
-          maxId = dbScheduleItem.id;
+      scheduleItemsData.forEach(scheduleItemData => {
+        if (scheduleItemData.id > maxId) {
+          maxId = scheduleItemData.id;
         }
       });
       setIdCount(maxId + 1);
-      setScheduleItems(dbScheduleItems);
+      setScheduleItems(scheduleItemsData);
     }
-  }, [dbScheduleItems]);
+  }, [scheduleItemsData]);
 
   // Sorts list by time
   useEffect(() => {
@@ -114,7 +118,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     });
 
     try {
-      axios.post('http://localhost:3000/daily_schedule', {
+      axios.post(`http://localhost:3000${DBPath}`, {
         id: idCount,
         patientName: patientName,
         activityTime: activityTime,
@@ -141,7 +145,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3000/daily_schedule/${id}`, {
+      await axios.put(`http://localhost:3000${DBPath}/${id}`, {
         patientName: patientName,
         activityTime: activityTime,
         activityTitle: activityTitle,
@@ -174,6 +178,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
         {sortedScheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
           <ScheduleListItem
             scheduleItem={scheduleItem}
+            patientsData={patientsData}
             submitFormHandler={submitFormPutHandler}
             key={key}
             // update after implementing patientHouse in db
@@ -188,6 +193,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
       )}
       {formIsVisible && (
         <ScheduleForm
+          patientsData={patientsData}
           submitFormHandler={submitFormPostHandler}
           isVisible={formIsVisible}
           setIsVisible={setFormIsVisible}
