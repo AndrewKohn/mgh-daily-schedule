@@ -5,9 +5,11 @@ import ScheduleItem from '../../store/ScheduleListModel';
 import AdminContext from '../../store/AdminContext';
 import optionTimes from '../../store/OptionTimes';
 import ScheduleForm from './ScheduleForm/ScheduleForm';
+import Patient from '../../store/PatientModel';
 
 interface Props {
   scheduleItem: ScheduleItem;
+  patientsData: Patient[];
   submitFormHandler: (
     e: React.FormEvent<HTMLFormElement>,
     patientName: string,
@@ -22,6 +24,7 @@ interface Props {
 
 const ScheduleListItem = ({
   scheduleItem,
+  patientsData,
   submitFormHandler,
   highlightedShift,
 }: Props) => {
@@ -101,6 +104,7 @@ const ScheduleListItem = ({
           isVisible={editScheduleItem}
           setIsVisible={setEditScheduleItem}
           scheduleItem={scheduleItem}
+          patientsData={patientsData}
         />
       )}
     </Fragment>
