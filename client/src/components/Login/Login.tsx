@@ -88,7 +88,7 @@ const Login = ({}) => {
             <Button buttonType="submit">Login</Button>
           ) : (
             <Button buttonType="button" buttonHandler={logoutHandler}>
-              logout
+              Logout
             </Button>
           )
         }
