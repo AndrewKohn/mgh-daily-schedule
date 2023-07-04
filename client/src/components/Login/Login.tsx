@@ -12,11 +12,6 @@ const Login = ({}) => {
   const [isUsernameValid, setIsUsernameValid] = useState<boolean>(true);
   const [password, setPassword] = useState<string>('');
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(true);
-  const [loginIsValid, setLoginIsValid] = useState<boolean>(false);
-
-  useEffect(() => {
-    setLoginIsValid(isUsernameValid && isPasswordValid);
-  }, [username, password]);
 
   // Username
   const userInputChangeHandler = (userInput: string) => {
