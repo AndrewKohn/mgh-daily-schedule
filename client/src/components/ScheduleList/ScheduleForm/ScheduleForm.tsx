@@ -92,6 +92,22 @@ const ScheduleForm = ({
     if (time >= 12) return time - 12 + 'PM';
   };
 
+  const transformTextAreaContent = (textAreaContent: string | undefined) => {
+    if (textAreaContent !== undefined) {
+      const splitTextContent = textAreaContent.split('');
+      let modifiedTextContent: string[] = [];
+      for (let i = 0; i < splitTextContent.length; i++) {
+        if (splitTextContent[i] === "'") {
+          modifiedTextContent.push('\\');
+        }
+
+        modifiedTextContent.push(splitTextContent[i]);
+      }
+
+      return modifiedTextContent.join('');
+    }
+  };
+
   return (
     <Modal isVisible={isVisible} setIsVisible={setIsVisible}>
       <form
@@ -103,7 +119,7 @@ const ScheduleForm = ({
                 activityTime,
                 activityTitle,
                 isImportant,
-                activityNote,
+                transformTextAreaContent(activityNote),
                 id
               )
             : submitFormHandler(
@@ -112,7 +128,7 @@ const ScheduleForm = ({
                 activityTime,
                 activityTitle,
                 isImportant,
-                activityNote
+                transformTextAreaContent(activityNote)
               );
           setIsVisible(false);
         }}
