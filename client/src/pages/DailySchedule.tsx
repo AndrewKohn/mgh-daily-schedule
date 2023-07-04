@@ -77,7 +77,7 @@ const DailySchedule = ({}) => {
   ) => {
     const { path, target } = config;
     axios
-      .get('http://localhost:3000' + path)
+      .get('http://75.72.55.128:3000' + path)
       .then(res => {
         if (JSON.stringify(state) !== JSON.stringify(res.data[target])) {
           setState(res.data[target]);

@@ -29,7 +29,7 @@ const Footer = ({}) => {
 
   const getScheduleData = async (path: string) => {
     try {
-      const response = await axios.get('http://localhost:3000/' + path);
+      const response = await axios.get('http://75.72.55.128:3000/' + path);
       return response.data;
     } catch (error) {
       console.error('GET error:', error);
