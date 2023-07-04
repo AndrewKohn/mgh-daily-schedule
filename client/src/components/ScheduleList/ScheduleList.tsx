@@ -28,7 +28,6 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
   >([]);
   const [idCount, setIdCount] = useState<number>(1);
 
-  // [FIXME] : sortByTime not sorting correctly, but highlighting works...
   const sortByTime = () => {
     const dayShiftStart = '7';
     const nightShiftStart = '19';
@@ -48,7 +47,6 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
         break;
       }
     }
-
     // Sort the schedule items by time
     return newArray
       .slice(newArrayIndex)
@@ -61,13 +59,13 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
       scheduleItem.activityTime >= 7 &&
       scheduleItem.activityTime < 19
     )
-      return 'highlight';
+      return 'highlight--day';
 
     if (
       (!isDayShift && scheduleItem.activityTime < 7) ||
       (!isDayShift && scheduleItem.activityTime >= 19)
     )
-      return 'highlight';
+      return 'highlight--night';
   };
 
   // Set schedule from database
@@ -158,10 +156,10 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
   };
 
   const showFormHandler = (e: any) => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth',
+    // });
 
     setFormIsVisible(true);
   };

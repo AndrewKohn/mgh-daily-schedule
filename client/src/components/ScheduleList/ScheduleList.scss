@@ -42,8 +42,33 @@
     }
   }
 
-  .highlight {
-    background-color: red;
+  .highlight--day {
+    background: linear-gradient(
+      to right,
+      rgba(173, 147, 0, 0.2),
+      rgba(255, 255, 255, 0) 6%
+    );
+
+    animation: highlight-slide 2s linear;
+  }
+
+  .highlight--night {
+    background: linear-gradient(
+      to right,
+      rgba(158, 43, 253, 0.2),
+      rgba(255, 255, 255, 0) 6%
+    );
+
+    animation: highlight-slide 2s linear;
+  }
+
+  @keyframes highlight-slide {
+    0% {
+      background-position-x: 0%;
+    }
+    100% {
+      background-position-x: 100%;
+    }
   }
 }
 

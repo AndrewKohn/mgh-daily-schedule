@@ -7,9 +7,10 @@
   box-sizing: border-box;
   border: 1px solid slategray;
   border-top: none;
+  transition: background-color 0.15s linear;
 
-  &:hover {
-    background-color: rgba(112, 128, 144, 0.055);
+  &:not(:hover) {
+    background-color: rgba(112, 128, 144, 0.08);
   }
 
   .schedule-list-item-information {
