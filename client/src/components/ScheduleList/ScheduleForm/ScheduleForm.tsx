@@ -1,5 +1,4 @@
 import { useEffect, useState, useContext } from 'react';
-import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 import Modal from '../../UI/Modal/Modal';
 import './ScheduleForm.scss';
 import optionTimes from '../../../store/OptionTimes';
@@ -172,12 +171,6 @@ const ScheduleForm = ({
                 <option key={key}>{name}</option>
               ))}
             </select>
-            <button className="icon icon--add" type="button">
-              <IoMdAddCircleOutline />
-            </button>
-            <button className="icon icon--delete" type="button">
-              <IoMdRemoveCircleOutline />
-            </button>
           </div>
           <div className="form--selection-wrapper">
             <label htmlFor="activity-importance">Important</label>
