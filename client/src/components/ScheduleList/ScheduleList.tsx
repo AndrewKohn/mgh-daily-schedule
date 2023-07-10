@@ -184,7 +184,7 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
           />
         ))}
       </ul>
-      {adminContext.isLoggedIn && (
+      {scheduleItemsData.length === 0 && adminContext.isLoggedIn && (
         <button className="add-icon-container" onClick={showFormHandler}>
           <BsFillPlusCircleFill className="add-icon" />
         </button>
