@@ -6,6 +6,7 @@ import AdminContext from '../../store/AdminContext';
 import optionTimes from '../../store/OptionTimes';
 import ScheduleForm from './ScheduleForm/ScheduleForm';
 import Patient from '../../store/PatientModel';
+import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 
 interface Props {
   scheduleItem: ScheduleItem;
@@ -97,6 +98,14 @@ const ScheduleListItem = ({
 
           <span className="action-container">{activityAction()}</span>
         </span>
+        <div className="edit-action-icons">
+          <button className="action-icon action-icon--add" type="button">
+            <IoMdAddCircleOutline />
+          </button>
+          <button className="action-icon action-icon--delete" type="button">
+            <IoMdRemoveCircleOutline />
+          </button>
+        </div>
       </li>
       {editScheduleItem && (
         <ScheduleForm

@@ -8,6 +8,7 @@
   border: 1px solid slategray;
   border-top: none;
   transition: background-color 0.15s linear;
+  position: relative;
 
   &:not(:hover) {
     background-color: rgba(112, 128, 144, 0.08);
@@ -117,22 +118,67 @@
         cursor: pointer;
         background: none;
         border: none;
-
-        .edit-icon {
-          padding-top: 0.2rem;
-          color: $header;
-
-          &:hover {
-            color: $text;
-          }
-        }
       }
 
+      .edit-icon {
+        padding-top: 0.2rem;
+        color: $header;
+
+        &:hover {
+          color: $text;
+        }
+      }
       .checkbox {
         width: 100%;
         accent-color: $button;
         cursor: pointer;
       }
     }
+  }
+}
+
+.edit-action-icons {
+  @include mixins.DisplayFlex(center, flex-start, row, nowrap);
+  gap: 0.4rem;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  background-color: $border;
+  border: 1px solid $text;
+  border-left: none;
+  box-sizing: border-box;
+  z-index: -1;
+  padding: 0.4rem 0.4rem 0.4rem 0.6rem;
+  transition: all 0.2s linear;
+}
+
+.schedule-list-item:hover .edit-action-icons {
+  transform: translate(5rem, -50%);
+}
+
+.action-icon {
+  @include mixins.DisplayFlex(center, center, column, nowrap);
+  background-color: transparent;
+  transform: scale(1.35);
+  border: none;
+  cursor: pointer;
+  padding: 2px;
+  // border-radius: 3px;
+}
+
+.action-icon--add {
+  color: greenyellow;
+  &:hover {
+    background-color: rgba(0, 128, 0, 0.2);
+  }
+}
+
+.action-icon--delete {
+  color: red;
+
+  &:hover {
+    background-color: rgba(255, 0, 0, 0.15);
   }
 }
