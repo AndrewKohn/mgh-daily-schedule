@@ -29,12 +29,19 @@ const Footer = ({}) => {
 
   const getScheduleData = async (path: string) => {
     try {
-      const response = await axios.get('http://75.72.55.128:3000/' + path);
+      const response = await axios.get('http://75.72.55.128:59640/' + path);
       return response.data;
     } catch (error) {
       console.error('GET error:', error);
-      return null;
     }
+  };
+
+  const compareTimeStamp = (current: number[], next: number[]) => {
+    if (current[0] < next[0]) return next;
+    if (current[0] === next[0] && current[1] < next[1]) return next;
+    if (current[0] === next[0] && current[2] < next[2]) return next;
+
+    return current;
   };
 
   // Last date edit taken from database
@@ -52,14 +59,6 @@ const Footer = ({}) => {
 
     setLastDateEdit(tempDate[1] + '-' + tempDate[2] + '-' + tempDate[0]);
   }, [dbData]);
-
-  const compareTimeStamp = (current: number[], next: number[]) => {
-    if (current[0] < next[0]) return next;
-    if (current[0] === next[0] && current[1] < next[1]) return next;
-    if (current[0] === next[0] && current[2] < next[2]) return next;
-
-    return current;
-  };
 
   return (
     <footer className="footer">

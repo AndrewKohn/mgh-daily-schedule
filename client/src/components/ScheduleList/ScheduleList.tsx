@@ -116,7 +116,7 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
     });
 
     try {
-      axios.post(`http://75.72.55.128:3000${DBPath}`, {
+      axios.post(`http://75.72.55.128:59640${DBPath}`, {
         id: idCount,
         patientName: patientName,
         activityTime: activityTime,
@@ -143,7 +143,7 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://75.72.55.128:3000${DBPath}/${id}`, {
+      await axios.put(`http://75.72.55.128:59640${DBPath}/${id}`, {
         patientName: patientName,
         activityTime: activityTime,
         activityTitle: activityTitle,
