@@ -7,3 +7,9 @@
 An overview of the daily schedule between both houses in Morning Glory Homes. Used to highlight each shift's schedule and used to aid new nursing assistants to track and familiarize themselves in their roles.
 
 Administration has access to schedule editing & adding/removing patients and activities.
+
+[TODO]
+
+- ✅ Create dummy db tables for public use.
+- Refactor daily schedule code
+- Complete staff schedule feature

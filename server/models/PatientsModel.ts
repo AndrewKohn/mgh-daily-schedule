@@ -11,17 +11,17 @@ class Patients {
   }
 
   save() {
-    let sql = `INSERT INTO patients(patient_name, patient_residence, is_active) VALUES('${this.patientName}', '${this.patientResidence}', ${this.isActive});`;
+    let sql = `INSERT INTO dummy_patients(patient_name, residence, is_active) VALUES('${this.patientName}', '${this.patientResidence}', ${this.isActive});`;
     return patientsDB.execute(sql);
   }
 
   static findAll() {
-    let sql = `SELECT * FROM patients;`;
+    let sql = `SELECT * FROM dummy_patients;`;
     return patientsDB.execute(sql);
   }
 
   static findById(id: number) {
-    let sql = `SELECT * FROM patients WHERE id = ${id};`;
+    let sql = `SELECT * FROM dummy_patients WHERE id = ${id};`;
     return patientsDB.execute(sql);
   }
 
@@ -31,12 +31,12 @@ class Patients {
     patientResidence: string,
     isActive: number
   ) {
-    let sql = `UPDATE patients SET patient_name = '${patientName}', patient_residence = '${patientResidence}', is_active = '${isActive}' WHERE id = ${id};`;
+    let sql = `UPDATE dummy_patients SET patient_name = '${patientName}', residence = '${patientResidence}', is_active = '${isActive}' WHERE id = ${id};`;
     return patientsDB.execute(sql);
   }
 
   static delete(id: number) {
-    let sql = `DELETE FROM patients WHERE id in (${id});`;
+    let sql = `DELETE FROM dummy_patients WHERE id in (${id});`;
     return patientsDB.execute(sql);
   }
 }

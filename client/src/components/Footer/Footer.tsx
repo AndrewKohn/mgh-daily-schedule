@@ -1,20 +1,48 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './Footer.scss';
+import scheduleItem from '../../store/ScheduleListModel';
 
 interface Props {}
 
 const Footer = ({}) => {
   const currentDate = new Date().toString();
   const currentYear = currentDate.split(' ')[3];
+  const [cvData, setCvData] = useState<scheduleItem[]>([]);
+  const [wlData, setWlData] = useState<scheduleItem[]>([]);
   const [dbData, setDBData] = useState<any>([]);
   const [lastDateEdit, setLastDateEdit] = useState<string | null>(null);
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/daily_schedule')
-      .then(res => setDBData(res.data.dailySchedules));
+    getScheduleData('clearview').then(data =>
+      setCvData(data.clearviewDailySchedule)
+    );
+
+    getScheduleData('williston').then(data =>
+      setWlData(data.willistonDailySchedule)
+    );
   }, []);
+
+  useEffect(() => {
+    if (cvData && wlData) setDBData(cvData.concat(wlData));
+  }, [cvData, wlData]);
+
+  const getScheduleData = async (path: string) => {
+    try {
+      const response = await axios.get('http://75.72.55.128:59640/' + path);
+      return response.data;
+    } catch (error) {
+      console.error('GET error:', error);
+    }
+  };
+
+  const compareTimeStamp = (current: number[], next: number[]) => {
+    if (current[0] < next[0]) return next;
+    if (current[0] === next[0] && current[1] < next[1]) return next;
+    if (current[0] === next[0] && current[2] < next[2]) return next;
+
+    return current;
+  };
 
   // Last date edit taken from database
   // [NOTE] time isn't even being tracked correctly in data.created_at
@@ -31,14 +59,6 @@ const Footer = ({}) => {
 
     setLastDateEdit(tempDate[1] + '-' + tempDate[2] + '-' + tempDate[0]);
   }, [dbData]);
-
-  const compareTimeStamp = (current: number[], next: number[]) => {
-    if (current[0] < next[0]) return next;
-    if (current[0] === next[0] && current[1] < next[1]) return next;
-    if (current[0] === next[0] && current[2] < next[2]) return next;
-
-    return current;
-  };
 
   return (
     <footer className="footer">

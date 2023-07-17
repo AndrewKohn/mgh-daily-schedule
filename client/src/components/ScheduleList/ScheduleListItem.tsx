@@ -5,9 +5,12 @@ import ScheduleItem from '../../store/ScheduleListModel';
 import AdminContext from '../../store/AdminContext';
 import optionTimes from '../../store/OptionTimes';
 import ScheduleForm from './ScheduleForm/ScheduleForm';
+import Patient from '../../store/PatientModel';
+import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
 
 interface Props {
   scheduleItem: ScheduleItem;
+  patientsData: Patient[];
   submitFormHandler: (
     e: React.FormEvent<HTMLFormElement>,
     patientName: string,
@@ -22,6 +25,7 @@ interface Props {
 
 const ScheduleListItem = ({
   scheduleItem,
+  patientsData,
   submitFormHandler,
   highlightedShift,
 }: Props) => {
@@ -94,6 +98,14 @@ const ScheduleListItem = ({
 
           <span className="action-container">{activityAction()}</span>
         </span>
+        <div className="edit-action-icons">
+          <button className="action-icon action-icon--add" type="button">
+            <IoMdAddCircleOutline />
+          </button>
+          <button className="action-icon action-icon--delete" type="button">
+            <IoMdRemoveCircleOutline />
+          </button>
+        </div>
       </li>
       {editScheduleItem && (
         <ScheduleForm
@@ -101,6 +113,7 @@ const ScheduleListItem = ({
           isVisible={editScheduleItem}
           setIsVisible={setEditScheduleItem}
           scheduleItem={scheduleItem}
+          patientsData={patientsData}
         />
       )}
     </Fragment>

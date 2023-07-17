@@ -1,11 +1,11 @@
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useState } from 'react';
 
 interface Props {
   children?: React.ReactNode;
 }
 
 const AdminContext = createContext({
-  isLoggedIn: true,
+  isLoggedIn: false,
   onLogout: () => {},
   onLogIn: (username: string, password: string) => {},
 });
@@ -13,7 +13,7 @@ const AdminContext = createContext({
 export const AdminContextProvider: React.FC<Props> = ({
   children,
 }): JSX.Element => {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(true);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const loginHandler = (username: string, password: string) => {
     username === 'testLogin' && password === 'zulu123'

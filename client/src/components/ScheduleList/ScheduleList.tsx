@@ -7,12 +7,15 @@ import ScheduleListItem from './ScheduleListItem';
 import ScheduleItem from '../../store/ScheduleListModel';
 import axios from 'axios';
 import StaffShiftContext from '../../store/StaffShiftContext';
+import Patient from '../../store/PatientModel';
 
 interface Props {
-  dbScheduleItems: ScheduleItem[];
+  scheduleItemsData: ScheduleItem[];
+  DBPath: string;
+  patientsData: Patient[];
 }
 
-const ScheduleList = ({ dbScheduleItems }: Props) => {
+const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
   const adminContext = useContext(AdminContext);
   const { isDayShift } = useContext(StaffShiftContext);
   const [formIsVisible, setFormIsVisible] = useState<boolean>(false);
@@ -44,7 +47,6 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
         break;
       }
     }
-
     // Sort the schedule items by time
     return newArray
       .slice(newArrayIndex)
@@ -57,28 +59,28 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
       scheduleItem.activityTime >= 7 &&
       scheduleItem.activityTime < 19
     )
-      return 'highlight';
+      return 'highlight--day';
 
     if (
       (!isDayShift && scheduleItem.activityTime < 7) ||
       (!isDayShift && scheduleItem.activityTime >= 19)
     )
-      return 'highlight';
+      return 'highlight--night';
   };
 
   // Set schedule from database
   useEffect(() => {
-    if (dbScheduleItems) {
+    if (scheduleItemsData) {
       let maxId = 0;
-      dbScheduleItems.forEach(dbScheduleItem => {
-        if (dbScheduleItem.id > maxId) {
-          maxId = dbScheduleItem.id;
+      scheduleItemsData.forEach(scheduleItemData => {
+        if (scheduleItemData.id > maxId) {
+          maxId = scheduleItemData.id;
         }
       });
       setIdCount(maxId + 1);
-      setScheduleItems(dbScheduleItems);
+      setScheduleItems(scheduleItemsData);
     }
-  }, [dbScheduleItems]);
+  }, [scheduleItemsData]);
 
   // Sorts list by time
   useEffect(() => {
@@ -114,7 +116,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     });
 
     try {
-      axios.post('http://localhost:3000/daily_schedule', {
+      axios.post(`http://75.72.55.128:59640${DBPath}`, {
         id: idCount,
         patientName: patientName,
         activityTime: activityTime,
@@ -141,7 +143,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://localhost:3000/daily_schedule/${id}`, {
+      await axios.put(`http://75.72.55.128:59640${DBPath}/${id}`, {
         patientName: patientName,
         activityTime: activityTime,
         activityTitle: activityTitle,
@@ -154,10 +156,10 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
   };
 
   const showFormHandler = (e: any) => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth',
+    // });
 
     setFormIsVisible(true);
   };
@@ -174,6 +176,7 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
         {sortedScheduleItems.map((scheduleItem: ScheduleItem, key: number) => (
           <ScheduleListItem
             scheduleItem={scheduleItem}
+            patientsData={patientsData}
             submitFormHandler={submitFormPutHandler}
             key={key}
             // update after implementing patientHouse in db
@@ -181,13 +184,14 @@ const ScheduleList = ({ dbScheduleItems }: Props) => {
           />
         ))}
       </ul>
-      {adminContext.isLoggedIn && (
+      {scheduleItemsData.length === 0 && adminContext.isLoggedIn && (
         <button className="add-icon-container" onClick={showFormHandler}>
           <BsFillPlusCircleFill className="add-icon" />
         </button>
       )}
       {formIsVisible && (
         <ScheduleForm
+          patientsData={patientsData}
           submitFormHandler={submitFormPostHandler}
           isVisible={formIsVisible}
           setIsVisible={setFormIsVisible}

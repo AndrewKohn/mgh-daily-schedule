@@ -8,8 +8,6 @@ import Home from './pages/Home';
 import StaffSchedule from './pages/StaffSchedule';
 
 const App = ({}) => {
-  const adminContext = useContext(AdminContext);
-
   return (
     <div className="container">
       <main className="main">
