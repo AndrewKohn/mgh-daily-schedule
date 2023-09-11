@@ -13,8 +13,6 @@ interface DBConfig {
 
 const DailySchedule = ({}) => {
   const staffShiftContext = useContext(StaffShiftContext);
-  const [dbData, setDBData] = useState<any>([]);
-  const [dbScheduleItems, setDBScheduleItems] = useState<ScheduleItem[]>([]);
   const [clearviewDB, setClearviewDB] = useState<ScheduleItem[]>([]);
   const [willistonDB, setWillistonDB] = useState<ScheduleItem[]>([]);
   const [patientsDB, setPatientsDB] = useState<Patient[]>([]);
@@ -26,7 +24,7 @@ const DailySchedule = ({}) => {
   );
   const [patients, setPatients] = useState<Patient[]>([]);
 
-  // [TODO] : Add more configs for public test account
+  // Configs
   const clearviewConfig: DBConfig = {
     path: '/clearview',
     target: 'clearviewDailySchedule',
@@ -42,8 +40,8 @@ const DailySchedule = ({}) => {
     target: 'patients',
   };
 
+  // TODO:  I don't like continuously fetching for data to re-render new updates.  Look into websockets??
   useEffect(() => {
-    // [TODO] : Maybe this might need setInterval to render update information
     // initial GET
     getDBData<Patient[]>(patientsConfig, patientsDB, setPatientsDB);
     getDBData<ScheduleItem[]>(clearviewConfig, clearviewDB, setClearviewDB);
@@ -77,7 +75,7 @@ const DailySchedule = ({}) => {
   ) => {
     const { path, target } = config;
     axios
-      .get('http://75.72.55.128:59640' + path)
+      .get('http://68.47.47.44:59640' + path)
       .then(res => {
         if (JSON.stringify(state) !== JSON.stringify(res.data[target])) {
           setState(res.data[target]);
@@ -112,49 +110,6 @@ const DailySchedule = ({}) => {
 
     return [];
   };
-
-  ///////////////////////////////////////////////////////////////
-
-  // useEffect(() => {
-  //   // Initial GET
-  //   axios.get('http://localhost:3000/daily_schedule').then(res => {
-  //     const newDbData = res.data.dailySchedules;
-  //     if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
-  //       setDBData(newDbData);
-  //     }
-  //   });
-
-  //   // Set state if there are changes
-  //   const intervalDBGet = setInterval(() => {
-  //     axios.get('http://localhost:3000/daily_schedule').then(res => {
-  //       const newDbData = res.data.dailySchedules;
-  //       if (JSON.stringify(dbData) !== JSON.stringify(newDbData)) {
-  //         setDBData(newDbData);
-  //       }
-  //     });
-  //   }, 1000);
-
-  //   return () => clearInterval(intervalDBGet);
-  // }, [dbData]);
-
-  // // Display data if present & updates upon changes
-  // useEffect(() => {
-  //   if (dbData.length > 0) {
-  //     const newDbScheduleItems = dbData.map((data: any) => ({
-  //       id: data.id,
-  //       patientName: data.patient_name,
-  //       activityTime: data.activity_time,
-  //       activityTitle: data.activity_title,
-  //       activityNote: data.activity_note,
-  //       isImportant: data.is_important,
-  //       isComplete: false,
-  //       isEdit: false,
-  //     }));
-  //     setDBScheduleItems([...newDbScheduleItems]);
-  //   }
-  // }, [dbData]);
-
-  //////////////////////////////////////////////////////
 
   return (
     <Fragment>
