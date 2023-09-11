@@ -3,8 +3,6 @@ import { useEffect, useState } from 'react';
 import './Footer.scss';
 import scheduleItem from '../../store/ScheduleListModel';
 
-interface Props {}
-
 const Footer = ({}) => {
   const currentDate = new Date().toString();
   const currentYear = currentDate.split(' ')[3];
@@ -29,7 +27,7 @@ const Footer = ({}) => {
 
   const getScheduleData = async (path: string) => {
     try {
-      const response = await axios.get('http://75.72.55.128:59640/' + path);
+      const response = await axios.get('http://68.47.47.44:59640/' + path);
       return response.data;
     } catch (error) {
       console.error('GET error:', error);
@@ -45,7 +43,8 @@ const Footer = ({}) => {
   };
 
   // Last date edit taken from database
-  // [NOTE] time isn't even being tracked correctly in data.created_at
+  // TODO:  Time isn't even being tracked correctly in data.created_at.
+  // 
   useEffect(() => {
     let tempDate = [0, 0, 0];
     // let tempTime = [0, 0, 0];

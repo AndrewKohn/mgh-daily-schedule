@@ -29,15 +29,6 @@ const ScheduleForm = ({
   scheduleItem,
   patientsData,
 }: Props) => {
-  let names = [
-    'Adams, Dorothy',
-    'Butter, Peanut',
-    'Wills, Rean',
-    'Hernandez, Raul',
-    'James, Connor',
-    'Rian, Anya',
-  ];
-
   const staffShiftContext = useContext(StaffShiftContext);
   let patientNames = patientsData
     .map((patient: Patient) => {

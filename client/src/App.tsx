@@ -1,7 +1,5 @@
-import { useContext } from 'react';
 import './App.scss';
 import Footer from './components/Footer/Footer';
-import AdminContext from './store/AdminContext';
 import { Routes, Route } from 'react-router-dom';
 import DailySchedule from './pages/DailySchedule';
 import Home from './pages/Home';

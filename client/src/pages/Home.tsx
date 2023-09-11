@@ -7,11 +7,10 @@ import { useEffect, useState } from 'react';
 import Login from '../components/Login/Login';
 import { Link } from 'react-router-dom';
 
-interface Props {}
-
 const Home = ({}) => {
   const [showLogin, setShowLogin] = useState<boolean>(false);
 
+  // NOTE:  Updates title bar on home screen
   useEffect(() => {
     document
       .getElementById('favicon')

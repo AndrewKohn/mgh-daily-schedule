@@ -1,10 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import AdminContext from '../../store/AdminContext';
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
 import './Login.scss';
-
-interface Props {}
 
 const Login = ({}) => {
   const adminContext = useContext(AdminContext);
@@ -49,6 +47,7 @@ const Login = ({}) => {
 
   return (
     <Modal>
+    { /* TODO: Add disable class if user/pw don't meet min requirements. */ }
       <form onSubmit={submitHandler} className="login-form">
         {!adminContext.isLoggedIn && (
           <div className="username-container">
@@ -78,7 +77,6 @@ const Login = ({}) => {
         )}
 
         {
-          // Add disable class if user/pw don't meet min requirements.
           !adminContext.isLoggedIn ? (
             <Button buttonType="submit">Login</Button>
           ) : (
