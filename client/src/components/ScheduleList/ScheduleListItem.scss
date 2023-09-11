@@ -15,32 +15,58 @@
   }
 
   .schedule-list-item-information {
-    @include mixins.DisplayFlex(center, flex-start, row, nowrap);
+    @include mixins.DisplayFlex(center, center, row, nowrap);
 
     p {
       &:first-child {
         width: 5%;
         min-width: 6rem;
-        text-align: center;
+        margin-left: 0.8rem;
+        // text-align: center;
       }
-      &:nth-child(2) {
-        width: 15%;
-        min-width: 8rem;
-        text-align: center;
-      }
+      // &:nth-child(2) {
+      //   width: 15%;
+      //   min-width: 16rem;
+      //   text-align: center;
+      //   background-color: darkorange;
+      // }
       // &:nth-child(3) {
       //   width: 83%;
       // }
     }
 
+    .patient-profile {
+      @include mixins.DisplayFlex(flex-start, center, row, nowrap);
+      width: 15%;
+      min-width: 16rem;
+      gap: 1.2rem;
+
+      .profile-picture {
+        width: 4rem;
+        min-width: 4rem;
+        height: 4rem;
+        min-height: 4rem;
+        background-color: gray;
+        border-radius: 50%;
+        object-fit: cover;
+      }
+
+      p {
+        text-align: center;
+      }
+    }
+
     .activity-container {
       width: 75%;
       min-width: 20rem;
+
       .activity-title {
-        @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
+        @include mixins.DisplayFlex(flex-start, center, row, nowrap);
         cursor: pointer;
         position: relative;
         margin-left: 1.2rem;
+        // background-color: rgba(255, 0, 0, 0.154);
+        min-height: 4rem;
 
         &::marker {
           content: '';
@@ -55,8 +81,9 @@
       }
 
       .activity-title--without-note {
-        @include mixins.DisplayFlex(flex-start, flex-start, row, nowrap);
+        @include mixins.DisplayFlex(flex-start, center, row, nowrap);
         margin-left: 1.2rem;
+        min-height: 4rem;
       }
 
       .important {
@@ -101,7 +128,7 @@
 
     .activity-container[open] {
       border-radius: 5px;
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.3);
       transition: background-color 0.5s;
     }
 
