@@ -47,7 +47,6 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
         break;
       }
     }
-    // Sort the schedule items by time
     return newArray
       .slice(newArrayIndex)
       .concat(newArray.slice(0, newArrayIndex));
@@ -116,7 +115,7 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
     });
 
     try {
-      axios.post(`http://75.72.55.128:59640${DBPath}`, {
+      axios.post(`http://68.47.47.44:59640${DBPath}`, {
         id: idCount,
         patientName: patientName,
         activityTime: activityTime,
@@ -143,7 +142,7 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
     e.preventDefault();
 
     try {
-      await axios.put(`http://75.72.55.128:59640${DBPath}/${id}`, {
+      await axios.put(`http://68.47.47.44:59640${DBPath}/${id}`, {
         patientName: patientName,
         activityTime: activityTime,
         activityTitle: activityTitle,
@@ -156,11 +155,6 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
   };
 
   const showFormHandler = (e: any) => {
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: 'smooth',
-    // });
-
     setFormIsVisible(true);
   };
 
@@ -179,12 +173,11 @@ const ScheduleList = ({ scheduleItemsData, DBPath, patientsData }: Props) => {
             patientsData={patientsData}
             submitFormHandler={submitFormPutHandler}
             key={key}
-            // update after implementing patientHouse in db
             highlightedShift={highlightShiftTimes(scheduleItem)}
           />
         ))}
       </ul>
-      {scheduleItemsData.length === 0 && adminContext.isLoggedIn && (
+      {adminContext.isLoggedIn && (
         <button className="add-icon-container" onClick={showFormHandler}>
           <BsFillPlusCircleFill className="add-icon" />
         </button>
