@@ -6,7 +6,9 @@ import AdminContext from '../../store/AdminContext';
 import optionTimes from '../../store/OptionTimes';
 import ScheduleForm from './ScheduleForm/ScheduleForm';
 import Patient from '../../store/PatientModel';
-import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
+// import { IoMdAddCircleOutline, IoMdRemoveCircleOutline } from 'react-icons/io';
+import { CgProfile } from 'react-icons/cg';
+import profileImageSm1 from '../../assets/profile/man-1-sm.webp'; // TODO: Add to public dir & Add relative path to sql db
 
 interface Props {
   scheduleItem: ScheduleItem;
@@ -69,7 +71,20 @@ const ScheduleListItem = ({
           <p data-testid="required-time">
             {optionTimes[scheduleItem?.activityTime]}
           </p>
-          <p data-testid="required-name">{scheduleItem?.patientName}</p>
+
+          <div className="patient-profile">
+            {adminContext.isLoggedIn ? (
+              <img
+                className="profile-picture"
+                src={profileImageSm1}
+                alt="man-1 profile picture "
+              />
+            ) : (
+              <CgProfile className="profile-picture" />
+            )}
+
+            <p data-testid="required-name">{scheduleItem?.patientName}</p>
+          </div>
           {scheduleItem.activityNote !== undefined &&
           scheduleItem.activityNote.length > 0 ? (
             <details className="activity-container">
@@ -98,14 +113,6 @@ const ScheduleListItem = ({
 
           <span className="action-container">{activityAction()}</span>
         </span>
-        <div className="edit-action-icons">
-          <button className="action-icon action-icon--add" type="button">
-            <IoMdAddCircleOutline />
-          </button>
-          <button className="action-icon action-icon--delete" type="button">
-            <IoMdRemoveCircleOutline />
-          </button>
-        </div>
       </li>
       {editScheduleItem && (
         <ScheduleForm
